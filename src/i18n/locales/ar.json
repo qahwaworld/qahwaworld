@@ -1,0 +1,28 @@
+{
+  "navigation": {
+    "home": "الرئيسية",
+    "about": "من نحن",
+    "contact": "اتصل بنا",
+    "search": "بحث",
+    "articles": "المقالات",
+    "categories": "الفئات"
+  },
+  "article": {
+    "readMore": "اقرأ المزيد",
+    "publishedOn": "نشر في",
+    "author": "المؤلف",
+    "categories": "الفئات",
+    "tags": "الوسوم",
+    "relatedArticles": "مقالات ذات صلة"
+  },
+  "common": {
+    "loading": "جار التحميل...",
+    "error": "حدث خطأ",
+    "noResults": "لا توجد نتائج",
+    "viewAll": "عرض الكل"
+  },
+  "footer": {
+    "allRightsReserved": "جميع الحقوق محفوظة",
+    "followUs": "تابعنا"
+  }
+}

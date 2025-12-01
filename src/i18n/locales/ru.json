@@ -1,0 +1,28 @@
+{
+  "navigation": {
+    "home": "Главная",
+    "about": "О нас",
+    "contact": "Контакты",
+    "search": "Поиск",
+    "articles": "Статьи",
+    "categories": "Категории"
+  },
+  "article": {
+    "readMore": "Читать далее",
+    "publishedOn": "Опубликовано",
+    "author": "Автор",
+    "categories": "Категории",
+    "tags": "Теги",
+    "relatedArticles": "Похожие статьи"
+  },
+  "common": {
+    "loading": "Загрузка...",
+    "error": "Произошла ошибка",
+    "noResults": "Результатов не найдено",
+    "viewAll": "Посмотреть все"
+  },
+  "footer": {
+    "allRightsReserved": "Все права защищены",
+    "followUs": "Подписывайтесь"
+  }
+}

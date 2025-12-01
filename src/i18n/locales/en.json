@@ -1,0 +1,28 @@
+{
+  "navigation": {
+    "home": "Home",
+    "about": "About Us",
+    "contact": "Contact",
+    "search": "Search",
+    "articles": "Articles",
+    "categories": "Categories"
+  },
+  "article": {
+    "readMore": "Read More",
+    "publishedOn": "Published on",
+    "author": "Author",
+    "categories": "Categories",
+    "tags": "Tags",
+    "relatedArticles": "Related Articles"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "noResults": "No results found",
+    "viewAll": "View All"
+  },
+  "footer": {
+    "allRightsReserved": "All rights reserved",
+    "followUs": "Follow Us"
+  }
+}

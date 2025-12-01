@@ -1,0 +1,2 @@
+export { AuthorContent } from './AuthorContent';
+
