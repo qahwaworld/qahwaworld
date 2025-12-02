@@ -8,8 +8,9 @@ import { Footer } from '@/components/Footer';
 import { ScrollToTop } from '@/components/ScrollToTop';
 import { Toaster } from '@/components/ui/sonner';
 import { NavigationLoader } from '@/components/NavigationLoader';
+import { PopAdModal } from '@/components/PopAdModal';
 import { Language } from '@/types';
-import { Category } from '@/lib/actions/site/headerMenuAction';
+import { Category, LogoData } from '@/lib/actions/site/headerMenuAction';
 
 interface LocaleWrapperProps {
   children: React.ReactNode;
@@ -18,9 +19,20 @@ interface LocaleWrapperProps {
     ar: Category[];
     ru: Category[];
   };
+  mobileMenuData: {
+    en: Category[];
+    ar: Category[];
+    ru: Category[];
+  };
+  mobilePagesMenuData: {
+    en: Category[];
+    ar: Category[];
+    ru: Category[];
+  };
+  logoData: LogoData | null;
 }
 
-export function LocaleWrapper({ children, menuData }: LocaleWrapperProps) {
+export function LocaleWrapper({ children, menuData, mobileMenuData, mobilePagesMenuData, logoData }: LocaleWrapperProps) {
   const pathname = usePathname();
 
   // Detect locale from pathname - check for complete path segments to avoid matching '/ar' in '/article'
@@ -37,7 +49,7 @@ export function LocaleWrapper({ children, menuData }: LocaleWrapperProps) {
         <NavigationLoader />
       </Suspense>
       <div className="min-h-screen flex flex-col">
-        <Header key={locale} locale={locale} language={locale} menuData={menuData} />
+        <Header key={locale} locale={locale} language={locale} menuData={menuData} mobileMenuData={mobileMenuData} mobilePagesMenuData={mobilePagesMenuData} logoData={logoData} />
         <main className="flex-1">
           {children}
         </main>
@@ -45,6 +57,7 @@ export function LocaleWrapper({ children, menuData }: LocaleWrapperProps) {
       </div>
       <ScrollToTop />
       <Toaster />
+      <PopAdModal html={logoData?.popAdCode ?? null} />
     </LanguageProvider>
   );
 }

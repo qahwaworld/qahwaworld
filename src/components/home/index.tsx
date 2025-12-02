@@ -110,7 +110,7 @@ const HomePage: React.FC<HomePageProps> = async ({ locale }) => {
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
               {/* Left Sidebar - Latest Articles */}
-              <aside className="lg:col-span-3">
+              <aside className="lg:col-span-3 order-2 lg:order-1">
                 <div className="bg-white dark:bg-gray-800 px-6 py-6 sticky top-24">
                   {getAdBanner('home_page_ad2') ? (
                     <div 
@@ -126,7 +126,7 @@ const HomePage: React.FC<HomePageProps> = async ({ locale }) => {
               </aside>
 
 
-              <main className="lg:col-span-6 lg:border-x dark:lg:border-gray-700 lg:px-6">
+              <main className="lg:col-span-6 lg:border-x dark:lg:border-gray-700 lg:px-6 order-1 lg:order-2">
                 {/* Center Content - Latest First Article */}
                 {featuredArticle ? (
                   <Link
@@ -266,14 +266,14 @@ const HomePage: React.FC<HomePageProps> = async ({ locale }) => {
               </main>
 
               {/* Right Sidebar - Trending */}
-              <aside className="lg:col-span-3">
+              <aside className="lg:col-span-3 order-3 lg:order-3">
                 <div className="bg-white dark:bg-gray-800 px-6 py-6 sticky top-24">
                   <div className="flex items-center justify-between mb-6 pb-3 border-b dark:border-gray-700">
                     <h2 className="text-amber-900 dark:text-amber-100 text-xl">
                       {t.trending}
                     </h2>
                   </div>
-                  <div className="space-y-6">
+                  <div className="space-y-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 md:gap-4">
                     {trendingArticles.length > 0
                       ? trendingArticles.map((article) => {
                         const primaryCategory = article.categories?.[0];
@@ -350,18 +350,11 @@ const HomePage: React.FC<HomePageProps> = async ({ locale }) => {
         <div className="border-t border-b dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
           <div className="container mx-auto px-4">
             <div className="flex items-center justify-center py-4">
-              {getAdBanner('home_page_ad3') ? (
+              {getAdBanner('home_page_ad3') && (
                 <div 
                   className="w-full max-w-5xl"
                   dangerouslySetInnerHTML={{ __html: getAdBanner('home_page_ad3')!.content }}
                 />
-              ) : (
-                <div className="w-full max-w-5xl bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-700 dark:to-gray-600 border dark:border-gray-600 p-3 text-center">
-                  <span className="text-sm text-gray-600 dark:text-gray-300">
-                    {/* Advertisement Banner 3 */}
-                    📰 Advertisement Banner - 728x90
-                  </span>
-                </div>
               )}
             </div>
           </div>
@@ -724,18 +717,11 @@ const HomePage: React.FC<HomePageProps> = async ({ locale }) => {
         <div className="border-t dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
           <div className="container mx-auto px-4">
             <div className="flex items-center justify-center py-4">
-              {getAdBanner('home_page_ad5') ? (
+              {getAdBanner('home_page_ad5') && (
                 <div 
                   className="w-full max-w-5xl"
                   dangerouslySetInnerHTML={{ __html: getAdBanner('home_page_ad5')!.content }}
                 />
-              ) : (
-                <div className="w-full max-w-5xl bg-gradient-to-r from-green-50 to-emerald-50 dark:from-gray-700 dark:to-gray-600 border dark:border-gray-600 p-3 text-center">
-                  <span className="text-sm text-gray-600 dark:text-gray-300">
-                    {/* Advertisement Banner 5 */}
-                    📰 Advertisement Banner - 728x90
-                  </span>
-                </div>
               )}
             </div>
           </div>

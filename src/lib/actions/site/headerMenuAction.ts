@@ -1,6 +1,6 @@
 
 import client from "@/lib/client/ApolloClient";
-import {GET_HEADER_MENU} from "@/lib/wordpress/queries/site/headerQuery";
+import {GET_HEADER_MENU, GET_GLOBAL_OPTIONS, GET_MOBILE_CATEGORIES_MENU, GET_MOBILE_PAGES_MENU} from "@/lib/wordpress/queries/site/headerQuery";
 
 export interface MenuItem {
   label: string;
@@ -72,5 +72,161 @@ export async function HeaderMenuData(language: string = 'en'): Promise<Category[
     );
   } catch (error) {
     return [];
+  }
+}
+
+export interface MobileCategoriesMenuDataType {
+  menuItems: {
+    edges: MenuEdge[];
+  };
+}
+
+export async function MobileCategoriesMenuData(language: string = 'en'): Promise<Category[]> {
+  try {
+    // Convert language code to lowercase format
+    const languageCode = language.toLowerCase();
+    
+    const result = await client.query<MobileCategoriesMenuDataType>({
+      query: GET_MOBILE_CATEGORIES_MENU,
+      variables: {
+        language: languageCode,
+      },
+      context: {
+        fetchOptions: {
+          next: {
+            tags: ['wordpress', `wordpress-${languageCode}`, 'wordpress-menu', 'wordpress-mobile-categories'],
+          },
+        },
+      },
+    });
+
+    if (result.error || !result.data?.menuItems?.edges) {
+      return [];
+    }
+
+    return result.data.menuItems.edges.map(edge => 
+      transformMenuItem(edge.node)
+    );
+  } catch (error) {
+    return [];
+  }
+}
+
+export interface MobilePagesMenuDataType {
+  menuItems: {
+    edges: MenuEdge[];
+  };
+}
+
+export async function MobilePagesMenuData(language: string = 'en'): Promise<Category[]> {
+  try {
+    // Convert language code to lowercase format
+    const languageCode = language.toLowerCase();
+    
+    const result = await client.query<MobilePagesMenuDataType>({
+      query: GET_MOBILE_PAGES_MENU,
+      variables: {
+        language: languageCode,
+      },
+      context: {
+        fetchOptions: {
+          next: {
+            tags: ['wordpress', `wordpress-${languageCode}`, 'wordpress-menu', 'wordpress-mobile-pages'],
+          },
+        },
+      },
+    });
+
+    if (result.error || !result.data?.menuItems?.edges) {
+      return [];
+    }
+
+    return result.data.menuItems.edges.map(edge => 
+      transformMenuItem(edge.node)
+    );
+  } catch (error) {
+    return [];
+  }
+}
+
+export interface GlobalOptionsType {
+  themeSettings: {
+    themeGlobalOptions: {
+      logoDarkMode: {
+        node: {
+          altText: string;
+          sourceUrl: string;
+        };
+      };
+      logoLightMode: {
+        node: {
+          altText: string;
+          sourceUrl: string;
+        };
+      };
+      logoSticky: {
+        node: {
+          altText: string;
+          sourceUrl: string;
+        };
+      };
+      popAdCode?: string | null;
+    };
+  };
+}
+
+export interface LogoData {
+  darkMode: {
+    altText: string;
+    sourceUrl: string;
+  };
+  lightMode: {
+    altText: string;
+    sourceUrl: string;
+  };
+  sticky: {
+    altText: string;
+    sourceUrl: string;
+  };
+  popAdCode?: string | null;
+}
+
+export async function getGlobalOptions(): Promise<LogoData | null> {
+  try {
+    const result = await client.query<GlobalOptionsType>({
+      query: GET_GLOBAL_OPTIONS,
+      context: {
+        fetchOptions: {
+          next: {
+            tags: ['wordpress', 'wordpress-global-options', 'wordpress-header'],
+          },
+        },
+      },
+    });
+
+    if (result.error || !result.data?.themeSettings?.themeGlobalOptions) {
+      return null;
+    }
+
+    const options = result.data.themeSettings.themeGlobalOptions;
+
+    return {
+      darkMode: {
+        altText: options.logoDarkMode?.node?.altText || 'Qahwa World Logo',
+        sourceUrl: options.logoDarkMode?.node?.sourceUrl || '',
+      },
+      lightMode: {
+        altText: options.logoLightMode?.node?.altText || 'Qahwa World Logo',
+        sourceUrl: options.logoLightMode?.node?.sourceUrl || '',
+      },
+      sticky: {
+        altText: options.logoSticky?.node?.altText || 'Qahwa World Logo',
+        sourceUrl: options.logoSticky?.node?.sourceUrl || '',
+      },
+      popAdCode: options.popAdCode ?? null,
+    };
+  } catch (error) {
+    console.error('Error fetching global options:', error);
+    return null;
   }
 }

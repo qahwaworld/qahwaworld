@@ -7,7 +7,7 @@ import { Search, Menu, X, Mail, Moon, Sun, Facebook, Twitter, Instagram, Linkedi
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useTheme } from "@/contexts/ThemeContext";
 import { getLocalizedPath } from "@/lib/localization";
-import { Category, HeaderMenuData } from "@/lib/actions/site/headerMenuAction";
+import { Category, HeaderMenuData, LogoData } from "@/lib/actions/site/headerMenuAction";
 import { Button } from "@/components/ui/button";
 import { Language } from "@/types";
 import { NavigationMenu } from "./NavigationMenu";
@@ -34,10 +34,21 @@ interface HeaderInteractiveProps {
     ar: Category[];
     ru: Category[];
   };
+  mobileMenuData: {
+    en: Category[];
+    ar: Category[];
+    ru: Category[];
+  };
+  mobilePagesMenuData: {
+    en: Category[];
+    ar: Category[];
+    ru: Category[];
+  };
   locale: string;
+  logoData: LogoData | null;
 }
 
-export const HeaderInteractive: React.FC<HeaderInteractiveProps> = ({ menuData, locale }) => {
+export const HeaderInteractive: React.FC<HeaderInteractiveProps> = ({ menuData, mobileMenuData, mobilePagesMenuData, locale, logoData }) => {
   const { language, setLanguage, t, alternatePaths } = useLanguage();
   const { theme, setTheme } = useTheme();
   const router = useRouter();
@@ -51,6 +62,19 @@ export const HeaderInteractive: React.FC<HeaderInteractiveProps> = ({ menuData, 
 
   // Get current menu items based on language
   const menuItems = menuData[language] || menuData.en;
+  const mobileMenuItems = mobileMenuData[language] || mobileMenuData.en;
+  const mobilePagesMenuItems = mobilePagesMenuData[language] || mobilePagesMenuData.en;
+
+  // Get logo URLs with fallback to default paths
+  const darkModeLogo = logoData?.darkMode?.sourceUrl || '/images/qw-white-logo.svg';
+  const lightModeLogo = logoData?.lightMode?.sourceUrl || '/images/qahwaworld-logo.svg';
+  const stickyLogo = logoData?.sticky?.sourceUrl || '/images/qw-icon.svg';
+  const darkModeAlt = logoData?.darkMode?.altText || 'Qahwa World Logo';
+  const lightModeAlt = logoData?.lightMode?.altText || 'Qahwa World Logo';
+  const stickyAlt = logoData?.sticky?.altText || 'Qahwa World Logo';
+
+  // Avoid hydration mismatch by using light theme assets until mounted on client
+  const isDarkTheme = mounted && theme === 'dark';
 
   React.useEffect(() => {
     setMounted(true);
@@ -154,10 +178,10 @@ export const HeaderInteractive: React.FC<HeaderInteractiveProps> = ({ menuData, 
 
           {/* Center: Logo */}
           <Link href={getPath('/')} className="flex items-center gap-3 cursor-pointer group justify-center">
-            {theme === "dark" ? (
-              <img src="/images/qw-white-logo.svg" alt="Qahwa World Logo" className="h-10" />
+            {isDarkTheme ? (
+              <img src={darkModeLogo} alt={darkModeAlt} />
             ) : (
-              <img src="/images/qahwaworld-logo.svg" alt="Qahwa World Logo" className="h-10" />
+              <img src={lightModeLogo} alt={lightModeAlt} />
             )}
           </Link>
 
@@ -185,13 +209,13 @@ export const HeaderInteractive: React.FC<HeaderInteractiveProps> = ({ menuData, 
         {/* Mobile Header */}
         <div className="flex lg:hidden items-center justify-between py-4">
           <Link href={getPath('/')} className="flex items-center gap-3 cursor-pointer group">
-            <div className="w-10 h-10 bg-gradient-to-br from-amber-700 to-amber-900 rounded-full flex items-center justify-center shadow-md transition-transform group-hover:scale-105">
-              <div className="w-5 h-5 bg-amber-300 rounded-full"></div>
+            <div className="">
+              {isDarkTheme ? (
+                <img src={darkModeLogo} alt={darkModeAlt} className="h-10" />
+              ) : (
+                <img src={lightModeLogo} alt={lightModeAlt} className="h-10" />
+              )}
             </div>
-            <h1 className="text-amber-900 dark:text-amber-100 tracking-wide">
-              QAHWA
-              <span className="text-amber-700 dark:text-amber-500">WORLD</span>
-            </h1>
           </Link>
 
           <button
@@ -208,18 +232,18 @@ export const HeaderInteractive: React.FC<HeaderInteractiveProps> = ({ menuData, 
 
         {/* Desktop Navigation Row */}
         <nav
-          className={`hidden lg:flex items-center gap-1 transition-all duration-300 ease-in-out border-t dark:border-gray-700 will-change-[padding] ${isScrolled ? "justify-start py-2" : "justify-center py-3"
+          className={`hidden lg:flex items-center gap-1 transition-all duration-300 ease-in-out border-t dark:border-gray-700 will-change-[padding] ${isScrolled ? "justify-start py-2" : "justify-between py-3"
             }`}
         >
           {/* Small Logo on Scroll */}
           <Link
             href={getPath('/')}
-            className={`flex items-center gap-2 cursor-pointer group mr-6 transition-all duration-300 ease-in-out will-change-[opacity,width,transform] ${isScrolled
-              ? "opacity-100 visible w-auto translate-x-0"
-              : "opacity-0 invisible w-0 -translate-x-2"
+            className={`flex items-center gap-2 cursor-pointer group transition-all duration-300 ease-in-out will-change-[opacity,width,transform] ${isScrolled
+              ? "opacity-100 visible w-auto translate-x-0 mr-6"
+              : "opacity-0 invisible w-0 -translate-x-2 mr-0"
               }`}
           >
-            <img src="/images/qw-icon.svg" alt="Qahwa World Logo" className="h-10" />
+            <img src={stickyLogo} alt={stickyAlt} className="h-10" />
           </Link>
           <NavigationMenu menuItems={menuItems} locale={locale} isScrolled={false} />
 
@@ -242,7 +266,8 @@ export const HeaderInteractive: React.FC<HeaderInteractiveProps> = ({ menuData, 
 
       {/* Mobile Menu */}
       <MobileMenu
-        menuItems={menuItems}
+        menuItems={mobileMenuItems}
+        mobilePagesMenuItems={mobilePagesMenuItems}
         locale={locale}
         isOpen={mobileMenuOpen}
         onClose={() => setMobileMenuOpen(false)}

@@ -35,5 +35,110 @@ export const GET_HEADER_MENU = gql`
       }
     }
   }
+}
+`
+export const GET_MOBILE_CATEGORIES_MENU = gql`
+query getMobileCategoriesMenu($language: String = "en") {
+  menuItems(
+    where: {location: MOBILE_CATEGORIES, parentDatabaseId: 0, language: $language}
+  ) {
+    edges {
+      node {
+        label
+        uri
+        childItems {
+          edges {
+            node {
+              label
+              uri
+              childItems {
+                edges {
+                  node {
+                    label
+                    uri
+                    childItems {
+                      edges {
+                        node {
+                          label
+                          uri
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
+}
+`
+
+export const GET_MOBILE_PAGES_MENU = gql`
+query getMobilePagesMenu($language: String = "en") {
+  menuItems(
+    where: {location: MOBILE_PAGES, parentDatabaseId: 0, language: $language}
+  ) {
+    edges {
+      node {
+        label
+        uri
+        childItems {
+          edges {
+            node {
+              label
+              uri
+              childItems {
+                edges {
+                  node {
+                    label
+                    uri
+                    childItems {
+                      edges {
+                        node {
+                          label
+                          uri
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+`
+
+export const GET_GLOBAL_OPTIONS = gql`
+query globalOptions {
+  themeSettings {
+    themeGlobalOptions {
+      logoDarkMode {
+        node {
+          altText
+          sourceUrl
+        }
+      }
+      logoLightMode {
+        node {
+          altText
+          sourceUrl
+        }
+      }
+      logoSticky {
+        node {
+          altText
+          sourceUrl
+        }
+      }
+      popAdCode
+    }
+  }
+}
 `
