@@ -17,12 +17,13 @@ interface NavigationMenuProps {
 export const NavigationMenu: React.FC<NavigationMenuProps> = ({ menuItems, locale, isScrolled }) => {
   const pathname = usePathname();
   const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
+  const isRTL = locale === 'ar';
 
   const getPath = (path: string) => getLocalizedPath(path, locale);
 
   return (
     <>
-      {menuItems.map((item) => (
+      {menuItems.map((item, index) => (
         <div
           key={item.path}
           className="relative"
@@ -31,7 +32,7 @@ export const NavigationMenu: React.FC<NavigationMenuProps> = ({ menuItems, local
         >
           <Link
             href={getPath(item.path)}
-            className={`px-4 py-2 text-md hover:text-amber-700 dark:hover:text-amber-400 transition-colors flex items-center gap-1 ${
+            className={`${index === 0 ? (isRTL ? 'pl-4 pr-0' : 'pl-0 pr-4') : 'px-4'} py-2 text-md hover:text-amber-700 dark:hover:text-amber-400 transition-colors flex items-center gap-1 ${
               pathname?.includes(item.path)
                 ? "text-amber-700 dark:text-amber-400"
                 : "text-gray-700 dark:text-amber-300"

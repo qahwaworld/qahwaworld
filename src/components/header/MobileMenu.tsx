@@ -23,6 +23,7 @@ import { Language } from "@/types";
 
 interface MobileMenuProps {
   menuItems: Category[];
+  mobilePagesMenuItems: Category[];
   locale: string;
   isOpen: boolean;
   onClose: () => void;
@@ -48,6 +49,7 @@ interface MobileMenuItem {
 
 export const MobileMenu: React.FC<MobileMenuProps> = ({
   menuItems,
+  mobilePagesMenuItems,
   locale,
   isOpen,
   onClose,
@@ -84,28 +86,12 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({
     {
       key: "pages",
       title: translations.pages,
-      items: [
-        {
-          key: "about",
-          label: translations.about,
-          path: "/about",
-        },
-        {
-          key: "privacy",
-          label: translations.privacy,
-          path: "/privacy",
-        },
-        {
-          key: "contact",
-          label: translations.contact,
-          path: "/contact",
-        },
-        {
-          key: "faq",
-          label: translations.faq,
-          path: "/faq",
-        },
-      ],
+      items: mobilePagesMenuItems.map((item: Category) => ({
+        key: item.path,
+        label: item.name,
+        path: item.path,
+        subcategories: item.subcategories,
+      })),
     },
   ];
 

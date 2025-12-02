@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { ThemeProvider } from '@/contexts/ThemeContext';
 import { LocaleWrapper } from '@/components/LocaleWrapper';
 import { HtmlAttributes } from '@/components/HtmlAttributes';
-import { HeaderMenuData } from '@/lib/actions/site/headerMenuAction';
+import { HeaderMenuData, MobileCategoriesMenuData, MobilePagesMenuData, getGlobalOptions } from '@/lib/actions/site/headerMenuAction';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -15,11 +15,18 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // Fetch menu data for all languages on server side
-  const [enMenuItems, arMenuItems, ruMenuItems] = await Promise.all([
+  // Fetch menu data for all languages and global options on server side
+  const [enMenuItems, arMenuItems, ruMenuItems, enMobileMenuItems, arMobileMenuItems, ruMobileMenuItems, enMobilePagesItems, arMobilePagesItems, ruMobilePagesItems, logoData] = await Promise.all([
     HeaderMenuData('en'),
     HeaderMenuData('ar'),
     HeaderMenuData('ru'),
+    MobileCategoriesMenuData('en'),
+    MobileCategoriesMenuData('ar'),
+    MobileCategoriesMenuData('ru'),
+    MobilePagesMenuData('en'),
+    MobilePagesMenuData('ar'),
+    MobilePagesMenuData('ru'),
+    getGlobalOptions(),
   ]);
 
   const menuData = {
@@ -28,12 +35,24 @@ export default async function RootLayout({
     ru: ruMenuItems,
   };
 
+  const mobileMenuData = {
+    en: enMobileMenuItems,
+    ar: arMobileMenuItems,
+    ru: ruMobileMenuItems,
+  };
+
+  const mobilePagesMenuData = {
+    en: enMobilePagesItems,
+    ar: arMobilePagesItems,
+    ru: ruMobilePagesItems,
+  };
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body suppressHydrationWarning>
         <HtmlAttributes />
         <ThemeProvider>
-          <LocaleWrapper menuData={menuData}>
+          <LocaleWrapper menuData={menuData} mobileMenuData={mobileMenuData} mobilePagesMenuData={mobilePagesMenuData} logoData={logoData}>
             {children}
           </LocaleWrapper>
         </ThemeProvider>

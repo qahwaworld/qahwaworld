@@ -72,28 +72,12 @@ export const CategoryContent: React.FC<CategoryContentProps> = ({
 
   return (
     <>
-      <div className="flex justify-end mb-6">
-        <ViewToggle viewMode={viewMode} onViewModeChange={setViewMode} />
-      </div>
 
-      {viewMode === 'grid' ? (
-        <>
-          <ArticleGrid articles={articles} locale={locale} />
-          {loading && (
-            <div className="mt-8">
-              <ArticleGridSkeleton count={6} />
-            </div>
-          )}
-        </>
-      ) : (
-        <>
-          <ArticleList articles={articles} locale={locale} />
-          {loading && (
-            <div className="mt-8">
-              <ArticleListSkeleton count={3} />
-            </div>
-          )}
-        </>
+      <ArticleGrid articles={articles} locale={locale} />
+      {loading && (
+        <div className="mt-8">
+          <ArticleGridSkeleton count={6} />
+        </div>
       )}
 
       {/* Load More Button */}
