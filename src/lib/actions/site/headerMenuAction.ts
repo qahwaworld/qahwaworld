@@ -180,6 +180,11 @@ export interface GlobalOptionsType {
       footerCopyrightTextRightEn?: string | null;
       footerCopyrightTextRightAr?: string | null;
       footerCopyrightTextRightRu?: string | null;
+      googleAnalyticsId?: string | null;
+      googleTagManagerId?: string | null;
+      codeHead?: string | null;
+      codeBody?: string | null;
+      codeFooter?: string | null;
     };
   };
 }
@@ -204,9 +209,14 @@ export interface LogoData {
   footerCopyrightTextLeftEn?: string | null;
   footerCopyrightTextLeftAr?: string | null;
   footerCopyrightTextLeftRu?: string | null;
-  footerCopyrightTextRightEn?: string | null;
-  footerCopyrightTextRightAr?: string | null;
-  footerCopyrightTextRightRu?: string | null;
+      footerCopyrightTextRightEn?: string | null;
+      footerCopyrightTextRightAr?: string | null;
+      footerCopyrightTextRightRu?: string | null;
+      googleAnalyticsId?: string | null;
+      googleTagManagerId?: string | null;
+      codeHead?: string | null;
+      codeBody?: string | null;
+      codeFooter?: string | null;
 }
 
 export async function getGlobalOptions(): Promise<LogoData | null> {
@@ -251,6 +261,11 @@ export async function getGlobalOptions(): Promise<LogoData | null> {
       footerCopyrightTextRightEn: options.footerCopyrightTextRightEn ?? null,
       footerCopyrightTextRightAr: options.footerCopyrightTextRightAr ?? null,
       footerCopyrightTextRightRu: options.footerCopyrightTextRightRu ?? null,
+      googleAnalyticsId: options.googleAnalyticsId ?? null,
+      googleTagManagerId: options.googleTagManagerId ?? null,
+      codeHead: options.codeHead ?? null,
+      codeBody: options.codeBody ?? null,
+      codeFooter: options.codeFooter ?? null,
     };
   } catch (error) {
     console.error('Error fetching global options:', error);
