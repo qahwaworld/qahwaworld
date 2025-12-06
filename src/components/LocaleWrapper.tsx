@@ -29,10 +29,20 @@ interface LocaleWrapperProps {
     ar: Category[];
     ru: Category[];
   };
+  footerCategoriesMenuData: {
+    en: Category[];
+    ar: Category[];
+    ru: Category[];
+  };
+  footerPagesMenuData: {
+    en: Category[];
+    ar: Category[];
+    ru: Category[];
+  };
   logoData: LogoData | null;
 }
 
-export function LocaleWrapper({ children, menuData, mobileMenuData, mobilePagesMenuData, logoData }: LocaleWrapperProps) {
+export function LocaleWrapper({ children, menuData, mobileMenuData, mobilePagesMenuData, footerCategoriesMenuData, footerPagesMenuData, logoData }: LocaleWrapperProps) {
   const pathname = usePathname();
 
   // Detect locale from pathname - check for complete path segments to avoid matching '/ar' in '/article'
@@ -53,7 +63,7 @@ export function LocaleWrapper({ children, menuData, mobileMenuData, mobilePagesM
         <main className="flex-1">
           {children}
         </main>
-        <Footer />
+        <Footer logoData={logoData} footerCategoriesMenuData={footerCategoriesMenuData} footerPagesMenuData={footerPagesMenuData} />
       </div>
       <ScrollToTop />
       <Toaster />
