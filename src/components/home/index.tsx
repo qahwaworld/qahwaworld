@@ -365,10 +365,7 @@ const HomePage: React.FC<HomePageProps> = async ({ locale }) => {
           categorySections.map((section, index) => (
             <section
               key={section.category.id}
-              className="py-8 border-b dark:border-gray-700"
-              style={{
-                backgroundColor: section.sectionBackgroundColor || '#f9fafb',
-              }}
+              className="py-8 border-b dark:border-gray-700 bg-gray-50 dark:bg-gray-800"
             >
               <div className="container mx-auto px-4">
                 <div className="flex items-center justify-between mb-6">
@@ -406,7 +403,7 @@ const HomePage: React.FC<HomePageProps> = async ({ locale }) => {
                             />
                           </div>
                           <div className="p-4">
-                            <Badge className="bg-amber-100 text-amber-800 hover:bg-amber-200 mb-2">
+                            <Badge className="bg-amber-100 dark:bg-amber-900 text-amber-800 dark:text-amber-200 hover:bg-amber-200 dark:hover:bg-amber-800 mb-2">
                               {decodeHTMLEntities(section.category.name)}
                             </Badge>
                             <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 mb-2">
@@ -437,7 +434,7 @@ const HomePage: React.FC<HomePageProps> = async ({ locale }) => {
                           />
                         </div>
                         <div className="p-4">
-                          <Badge className="bg-amber-100 text-amber-800 hover:bg-amber-200 mb-2">
+                          <Badge className="bg-amber-100 dark:bg-amber-900 text-amber-800 dark:text-amber-200 hover:bg-amber-200 dark:hover:bg-amber-800 mb-2">
                             {article.category}
                           </Badge>
                           <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 mb-2">
@@ -488,7 +485,7 @@ const HomePage: React.FC<HomePageProps> = async ({ locale }) => {
                         />
                       </div>
                       <div className="p-4">
-                        <Badge className="bg-amber-100 text-amber-800 hover:bg-amber-200 mb-2">
+                        <Badge className="bg-amber-100 dark:bg-amber-900 text-amber-800 dark:text-amber-200 hover:bg-amber-200 dark:hover:bg-amber-800 mb-2">
                           {article.category}
                         </Badge>
                         <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 mb-2">

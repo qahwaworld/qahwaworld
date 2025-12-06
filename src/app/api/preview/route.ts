@@ -89,7 +89,7 @@ export async function GET(request: NextRequest) {
     const redirectUrl = new URL(previewPath, request.url);
     redirectUrl.searchParams.set('preview', 'true');
     redirectUrl.searchParams.set('token', token); // Pass token in URL for article page
-    redirectUrl.searchParams.set('preview_id', id); // Pass ID for article page to fetch by ID
+    redirectUrl.searchParams.set('preview_id', id); // Pass ID for article page to identify this is the previewed post
 
     const response = NextResponse.redirect(redirectUrl, {
       status: 307, // Temporary redirect

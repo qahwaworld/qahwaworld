@@ -229,17 +229,23 @@ export default async function Page({ params, searchParams, locale = 'en' }: Prop
     // Only get searchParams if in draft mode (to avoid static generation issues)
     let token: string | undefined;
     let previewId: string | undefined;
+    let isPreviewedPost = false;
+    
     if (isDraftMode) {
       const resolvedSearchParams = await searchParams;
       token = typeof resolvedSearchParams.token === 'string' ? resolvedSearchParams.token : undefined;
       previewId = typeof resolvedSearchParams.preview_id === 'string' ? resolvedSearchParams.preview_id : undefined;
+      
+      // Only treat as previewed post if we have the preview_id that matches the current slug
+      isPreviewedPost = !!(previewId && (previewId === decodedSlug || previewId.toString() === decodedSlug));
     }
     
-    // Fetch the article (use preview API if in draft mode)
+    // Fetch the article (use preview API ONLY if this is the specific previewed post)
     let articleData;
     
-    if (isDraftMode) {
-      // Check if slug is actually a numeric ID (for preview mode)
+    if (isDraftMode && isPreviewedPost && token) {
+      // This is the specific post being previewed - use preview API
+      // The preview endpoint will return draft/unpublished posts using the token
       const isNumericId = /^\d+$/.test(decodedSlug);
       const useId = previewId || (isNumericId ? decodedSlug : null);
       
@@ -249,6 +255,11 @@ export default async function Page({ params, searchParams, locale = 'en' }: Prop
         articleData = await fetchPreviewPostBySlug(decodedSlug, token);
       }
     } else {
+      // Not the previewed post, or no token - use regular API
+      // This allows:
+      // 1. Navigation to OTHER articles while in preview mode (they will be published articles)
+      // 2. Normal article viewing when NOT in preview mode
+      // 3. Graceful fallback if token is invalid/expired
       articleData = await getArticleBySlug(decodedSlug);
     }
 
