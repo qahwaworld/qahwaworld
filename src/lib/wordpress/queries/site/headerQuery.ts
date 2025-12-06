@@ -115,6 +115,84 @@ query getMobilePagesMenu($language: String = "en") {
 }
 `
 
+export const GET_FOOTER_CATEGORIES_MENU = gql`
+query getFooterCategoriesMenu($language: String = "en") {
+  menuItems(
+    where: {location: FOOTER_CATEGORIES, parentDatabaseId: 0, language: $language}
+  ) {
+    edges {
+      node {
+        label
+        uri
+        childItems {
+          edges {
+            node {
+              label
+              uri
+              childItems {
+                edges {
+                  node {
+                    label
+                    uri
+                    childItems {
+                      edges {
+                        node {
+                          label
+                          uri
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+`
+
+export const GET_FOOTER_PAGES_MENU = gql`
+query getFooterPagesMenu($language: String = "en") {
+  menuItems(
+    where: {location: FOOTER_PAGES, parentDatabaseId: 0, language: $language}
+  ) {
+    edges {
+      node {
+        label
+        uri
+        childItems {
+          edges {
+            node {
+              label
+              uri
+              childItems {
+                edges {
+                  node {
+                    label
+                    uri
+                    childItems {
+                      edges {
+                        node {
+                          label
+                          uri
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+`
+
 export const GET_GLOBAL_OPTIONS = gql`
 query globalOptions {
   themeSettings {
@@ -138,6 +216,15 @@ query globalOptions {
         }
       }
       popAdCode
+      footerDescriptionEn
+      footerDescriptionAr
+      footerDescriptionRu
+      footerCopyrightTextLeftEn
+      footerCopyrightTextLeftAr
+      footerCopyrightTextLeftRu
+      footerCopyrightTextRightEn
+      footerCopyrightTextRightAr
+      footerCopyrightTextRightRu
     }
   }
 }

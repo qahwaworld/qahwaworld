@@ -1,6 +1,6 @@
 
 import client from "@/lib/client/ApolloClient";
-import {GET_HEADER_MENU, GET_GLOBAL_OPTIONS, GET_MOBILE_CATEGORIES_MENU, GET_MOBILE_PAGES_MENU} from "@/lib/wordpress/queries/site/headerQuery";
+import {GET_HEADER_MENU, GET_GLOBAL_OPTIONS, GET_MOBILE_CATEGORIES_MENU, GET_MOBILE_PAGES_MENU, GET_FOOTER_CATEGORIES_MENU, GET_FOOTER_PAGES_MENU} from "@/lib/wordpress/queries/site/headerQuery";
 
 export interface MenuItem {
   label: string;
@@ -171,6 +171,15 @@ export interface GlobalOptionsType {
         };
       };
       popAdCode?: string | null;
+      footerDescriptionEn?: string | null;
+      footerDescriptionAr?: string | null;
+      footerDescriptionRu?: string | null;
+      footerCopyrightTextLeftEn?: string | null;
+      footerCopyrightTextLeftAr?: string | null;
+      footerCopyrightTextLeftRu?: string | null;
+      footerCopyrightTextRightEn?: string | null;
+      footerCopyrightTextRightAr?: string | null;
+      footerCopyrightTextRightRu?: string | null;
     };
   };
 }
@@ -189,6 +198,15 @@ export interface LogoData {
     sourceUrl: string;
   };
   popAdCode?: string | null;
+  footerDescriptionEn?: string | null;
+  footerDescriptionAr?: string | null;
+  footerDescriptionRu?: string | null;
+  footerCopyrightTextLeftEn?: string | null;
+  footerCopyrightTextLeftAr?: string | null;
+  footerCopyrightTextLeftRu?: string | null;
+  footerCopyrightTextRightEn?: string | null;
+  footerCopyrightTextRightAr?: string | null;
+  footerCopyrightTextRightRu?: string | null;
 }
 
 export async function getGlobalOptions(): Promise<LogoData | null> {
@@ -224,9 +242,92 @@ export async function getGlobalOptions(): Promise<LogoData | null> {
         sourceUrl: options.logoSticky?.node?.sourceUrl || '',
       },
       popAdCode: options.popAdCode ?? null,
+      footerDescriptionEn: options.footerDescriptionEn ?? null,
+      footerDescriptionAr: options.footerDescriptionAr ?? null,
+      footerDescriptionRu: options.footerDescriptionRu ?? null,
+      footerCopyrightTextLeftEn: options.footerCopyrightTextLeftEn ?? null,
+      footerCopyrightTextLeftAr: options.footerCopyrightTextLeftAr ?? null,
+      footerCopyrightTextLeftRu: options.footerCopyrightTextLeftRu ?? null,
+      footerCopyrightTextRightEn: options.footerCopyrightTextRightEn ?? null,
+      footerCopyrightTextRightAr: options.footerCopyrightTextRightAr ?? null,
+      footerCopyrightTextRightRu: options.footerCopyrightTextRightRu ?? null,
     };
   } catch (error) {
     console.error('Error fetching global options:', error);
     return null;
+  }
+}
+
+export interface FooterCategoriesMenuDataType {
+  menuItems: {
+    edges: MenuEdge[];
+  };
+}
+
+export async function FooterCategoriesMenuData(language: string = 'en'): Promise<Category[]> {
+  try {
+    // Convert language code to lowercase format
+    const languageCode = language.toLowerCase();
+    
+    const result = await client.query<FooterCategoriesMenuDataType>({
+      query: GET_FOOTER_CATEGORIES_MENU,
+      variables: {
+        language: languageCode,
+      },
+      context: {
+        fetchOptions: {
+          next: {
+            tags: ['wordpress', `wordpress-${languageCode}`, 'wordpress-menu', 'wordpress-footer-categories'],
+          },
+        },
+      },
+    });
+
+    if (result.error || !result.data?.menuItems?.edges) {
+      return [];
+    }
+
+    return result.data.menuItems.edges.map(edge => 
+      transformMenuItem(edge.node)
+    );
+  } catch (error) {
+    return [];
+  }
+}
+
+export interface FooterPagesMenuDataType {
+  menuItems: {
+    edges: MenuEdge[];
+  };
+}
+
+export async function FooterPagesMenuData(language: string = 'en'): Promise<Category[]> {
+  try {
+    // Convert language code to lowercase format
+    const languageCode = language.toLowerCase();
+    
+    const result = await client.query<FooterPagesMenuDataType>({
+      query: GET_FOOTER_PAGES_MENU,
+      variables: {
+        language: languageCode,
+      },
+      context: {
+        fetchOptions: {
+          next: {
+            tags: ['wordpress', `wordpress-${languageCode}`, 'wordpress-menu', 'wordpress-footer-pages'],
+          },
+        },
+      },
+    });
+
+    if (result.error || !result.data?.menuItems?.edges) {
+      return [];
+    }
+
+    return result.data.menuItems.edges.map(edge => 
+      transformMenuItem(edge.node)
+    );
+  } catch (error) {
+    return [];
   }
 }

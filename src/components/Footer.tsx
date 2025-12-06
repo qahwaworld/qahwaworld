@@ -6,6 +6,7 @@ import { useParams } from 'next/navigation';
 import { useLanguage } from "../contexts/LanguageContext";
 import { getLocalizedPath } from "@/lib/localization";
 import { Facebook, Twitter, Instagram, Linkedin, Cloud } from "lucide-react";
+import { LogoData, Category } from "@/lib/actions/site/headerMenuAction";
 
 
 // Custom Bluesky icon component
@@ -20,90 +21,78 @@ const BlueskyIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-export const Footer: React.FC = () => {
+interface FooterProps {
+  logoData: LogoData | null;
+  footerCategoriesMenuData: {
+    en: Category[];
+    ar: Category[];
+    ru: Category[];
+  };
+  footerPagesMenuData: {
+    en: Category[];
+    ar: Category[];
+    ru: Category[];
+  };
+}
+
+export const Footer: React.FC<FooterProps> = ({ logoData, footerCategoriesMenuData, footerPagesMenuData }) => {
   const { language } = useLanguage();
   const params = useParams() as { locale?: string };
   const locale = params?.locale || 'en';
   const getPath = (path: string) => getLocalizedPath(path, locale);
 
-  const categories = [
-    {
-      key: "News",
-      label:
-        language === "ar" ? "أخبار" : language === "ru" ? "Новости" : "News",
-    },
-    {
-      key: "Coffee Community",
-      label:
-        language === "ar"
-          ? "مجتمع القهوة"
-          : language === "ru"
-          ? "Кофейное сообщество"
-          : "Coffee Community",
-    },
-    {
-      key: "Studies",
-      label:
-        language === "ar"
-          ? "دراسات"
-          : language === "ru"
-          ? "Исследования"
-          : "Studies",
-    },
-    {
-      key: "Interview",
-      label:
-        language === "ar"
-          ? "حوارات"
-          : language === "ru"
-          ? "Интервью"
-          : "Interview",
-    },
-    {
-      key: "Coffee Reflections",
-      label:
-        language === "ar"
-          ? "تأملات"
-          : language === "ru"
-          ? "Размышления"
-          : "Coffee Reflections",
-    },
-  ];
+  // Get current language menu data
+  const currentLanguage = language.toLowerCase() as 'en' | 'ar' | 'ru';
+  const categories = footerCategoriesMenuData[currentLanguage] || footerCategoriesMenuData.en || [];
+  const pages = footerPagesMenuData[currentLanguage] || footerPagesMenuData.en || [];
 
-  const pages = [
-    {
-      key: "about",
-      label:
-        language === "ar" ? "من نحن" : language === "ru" ? "О нас" : "About Us",
-    },
-    {
-      key: "privacy",
-      label:
+  // Get dynamic footer content based on language
+  const getFooterDescription = () => {
+    if (!logoData) {
+      return language === "ar"
+        ? "استكشف عالم القهوة من خلال القصص والثقافة والمجتمع"
+        : language === "ru"
+        ? "Исследуйте мир кофе через истории, культуру и сообщество"
+        : "Explore the world of coffee through stories, culture, and community";
+    }
+    
+    if (language === "ar") return logoData.footerDescriptionAr || logoData.footerDescriptionEn || "";
+    if (language === "ru") return logoData.footerDescriptionRu || logoData.footerDescriptionEn || "";
+    return logoData.footerDescriptionEn || "";
+  };
+
+  const getCopyrightLeft = () => {
+    if (!logoData) {
+      return `© 2025 Qahwa World. ${
         language === "ar"
-          ? "سياسة الخصوصية"
+          ? "جميع الحقوق محفوظة"
           : language === "ru"
-          ? "Политика"
-          : "Privacy Policy",
-    },
-    {
-      key: "contact",
-      label:
-        language === "ar"
-          ? "اتصل بنا"
-          : language === "ru"
-          ? "Связаться с нами"
-          : "Contact Us",
-    },
-    {
-      key: "faq",
-      label:
-        language === "ar"
-          ? "الأسئلة الشائعة"
-          : language === "ru"
-          ? "ЧАВО"
-          : "FAQ",
-    },
-  ];
+          ? "Все права защищены"
+          : "All rights reserved"
+      }.`;
+    }
+    
+    if (language === "ar") return logoData.footerCopyrightTextLeftAr || logoData.footerCopyrightTextLeftEn || "";
+    if (language === "ru") return logoData.footerCopyrightTextLeftRu || logoData.footerCopyrightTextLeftEn || "";
+    return logoData.footerCopyrightTextLeftEn || "";
+  };
+
+  const getCopyrightRight = () => {
+    if (!logoData) {
+      return language === "ar"
+        ? "صنع بحب من عالم القهوة"
+        : language === "ru"
+        ? "Сделано с любовью Qahwa World"
+        : "Made with love by Qahwa World";
+    }
+    
+    if (language === "ar") return logoData.footerCopyrightTextRightAr || logoData.footerCopyrightTextRightEn || "";
+    if (language === "ru") return logoData.footerCopyrightTextRightRu || logoData.footerCopyrightTextRightEn || "";
+    return logoData.footerCopyrightTextRightEn || "";
+  };
+
+  const logoUrl = logoData?.darkMode?.sourceUrl || '/images/qw-white-logo.svg';
+  const logoAlt = logoData?.darkMode?.altText || 'Qahwa World Logo';
 
   return (
     <footer className="bg-gradient-to-b from-gray-900 to-black text-white border-t border-gray-800">
@@ -113,16 +102,12 @@ export const Footer: React.FC = () => {
           <div className="space-y-6">
             {/* Logo */}
             <Link href={getPath('/')} className="flex items-center gap-3 cursor-pointer group">
-              <img src='/images/qw-white-logo.svg' alt="Qahwa World Logo" className="h-10" />
+              <img src={logoUrl} alt={logoAlt} className="h-10" />
             </Link>
 
             {/* Tagline */}
             <p className="text-gray-400 leading-relaxed">
-              {language === "ar"
-                ? "استكشف عالم القهوة من خلال القصص والثقافة والمجتمع"
-                : language === "ru"
-                ? "Исследуйте мир кофе через истории, культуру и сообщество"
-                : "Explore the world of coffee through stories, culture, and community"}
+              {getFooterDescription()}
             </p>
 
             {/* Social Icons */}
@@ -180,16 +165,20 @@ export const Footer: React.FC = () => {
                 : "Categories"}
             </h3>
             <ul className="space-y-3">
-              {categories.map((category) => (
-                <li key={category.key}>
-                  <Link
-                    href={getPath(`/${encodeURIComponent(category.key)}`)}
-                    className="text-gray-400 hover:text-amber-500 transition-colors"
-                  >
-                    {category.label}
-                  </Link>
-                </li>
-              ))}
+              {categories.length > 0 ? (
+                categories.map((category, index) => (
+                  <li key={`category-${index}-${category.path}`}>
+                    <Link
+                      href={category.path}
+                      className="text-gray-400 hover:text-amber-500 transition-colors"
+                    >
+                      {category.name}
+                    </Link>
+                  </li>
+                ))
+              ) : (
+                <li className="text-gray-500 text-sm">No categories available</li>
+              )}
             </ul>
           </div>
 
@@ -203,16 +192,20 @@ export const Footer: React.FC = () => {
                 : "Pages"}
             </h3>
             <ul className="space-y-3">
-              {pages.map((page) => (
-                <li key={page.key}>
-                  <Link
-                    href={getPath(`/${page.key}`)}
-                    className="text-gray-400 hover:text-amber-500 transition-colors"
-                  >
-                    {page.label}
-                  </Link>
-                </li>
-              ))}
+              {pages.length > 0 ? (
+                pages.map((page, index) => (
+                  <li key={`page-${index}-${page.path}`}>
+                    <Link
+                      href={page.path}
+                      className="text-gray-400 hover:text-amber-500 transition-colors"
+                    >
+                      {page.name}
+                    </Link>
+                  </li>
+                ))
+              ) : (
+                <li className="text-gray-500 text-sm">No pages available</li>
+              )}
             </ul>
           </div>
         </div>
@@ -221,20 +214,10 @@ export const Footer: React.FC = () => {
         <div className="mt-12 pt-8 border-t border-gray-800">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-gray-500 text-sm">
-              © 2025 Qahwa World.{" "}
-              {language === "ar"
-                ? "جميع الحقوق محفوظة"
-                : language === "ru"
-                ? "Все права защищены"
-                : "All rights reserved"}
-              .
+              {getCopyrightLeft()}
             </p>
             <p className="text-gray-500 text-sm">
-              {language === "ar"
-                ? "صنع بحب من عالم القهوة"
-                : language === "ru"
-                ? "Сделано с любовью Qahwa World"
-                : "Made with love by Qahwa World"}
+              {getCopyrightRight()}
             </p>
           </div>
         </div>
