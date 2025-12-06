@@ -14,7 +14,7 @@ if ( ! defined( '_S_VERSION' ) ) {
 
 if ( ! defined( 'NEXTJS_FRONTEND_URL' ) ) {
 	// Next.js frontend URL - change this to your production URL when deploying
-	define( 'NEXTJS_FRONTEND_URL', 'http://localhost:3000' );
+	define( 'NEXTJS_FRONTEND_URL', 'https://qahwaworld.vercel.app' );
 }
 
 /**
@@ -54,7 +54,9 @@ function qahwaworld_wp_setup() {
 	// This theme uses wp_nav_menu() in one location.
 	register_nav_menus(
 		array(
-			'primary' => esc_html__( 'Main Menu', 'qahwaworld-wp' ),
+			'primary' => esc_html__( 'Desktop Main Menu', 'qahwaworld-wp' ),
+			'mobile-categories' => esc_html__( 'Mobile Categories Menu', 'qahwaworld-wp' ),
+			'mobile-pages' => esc_html__( 'Mobile Pages Menu', 'qahwaworld-wp' ),
 		)
 	);
 
@@ -178,7 +180,7 @@ require get_template_directory() . '/inc/customizer.php';
 /**
  * Revalidation for nextjs additions.
  */
-//require get_template_directory() . '/inc/revalidate.php';
+require get_template_directory() . '/inc/revalidate.php';
 
 
 /**
@@ -187,6 +189,33 @@ require get_template_directory() . '/inc/customizer.php';
 if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
+
+/* 
+  Enable SVG upload support in WordPress.
+  This function adds SVG MIME type to the allowed upload list.
+*/
+function allow_svg_uploads($mimes) {
+    $mimes['svg'] = 'image/svg+xml';
+    return $mimes;
+}
+add_filter('upload_mimes', 'allow_svg_uploads');
+
+
+/*
+  Fix SVG preview in Media Library.
+  WordPress sometimes flags SVG as insecure.
+  This filter helps WordPress correctly handle SVG file type.
+*/
+function fix_svg_display() {
+    echo '<style>
+        .attachment .thumbnail img[src$=".svg"] {
+            width: 100 percent;
+            height: auto;
+        }
+    </style>';
+}
+add_action('admin_head', 'fix_svg_display');
+
 
 /**
  * change post order for acf relation field
@@ -1340,4 +1369,3 @@ function nj_get_preview_post(\WP_REST_Request $req) {
 
     return rest_ensure_response($post_data);
 }
-
