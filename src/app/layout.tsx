@@ -2,8 +2,10 @@ import type { Metadata } from 'next';
 import { ThemeProvider } from '@/contexts/ThemeContext';
 import { LocaleWrapper } from '@/components/LocaleWrapper';
 import { HtmlAttributes } from '@/components/HtmlAttributes';
+import { ThirdPartyCode } from '@/components/ThirdPartyCode';
 import { HeaderMenuData, MobileCategoriesMenuData, MobilePagesMenuData, FooterCategoriesMenuData, FooterPagesMenuData, getGlobalOptions } from '@/lib/actions/site/headerMenuAction';
 import './globals.css';
+import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google';
 
 export const metadata: Metadata = {
   title: 'Qahwa World - Coffee Culture & News',
@@ -65,16 +67,30 @@ export default async function RootLayout({
     ru: ruFooterPagesItems,
   };
 
+  // Get Google Analytics and Tag Manager IDs from WordPress
+  const googleAnalyticsId = logoData?.googleAnalyticsId || null;
+  const googleTagManagerId = logoData?.googleTagManagerId || null;
+  
+  // Get third-party code snippets from WordPress
+  const codeHead = logoData?.codeHead || null;
+  const codeBody = logoData?.codeBody || null;
+  const codeFooter = logoData?.codeFooter || null;
+
   return (
     <html lang="en" suppressHydrationWarning>
+      {googleTagManagerId && <GoogleTagManager gtmId={googleTagManagerId} />}
       <body suppressHydrationWarning>
+        {codeHead && <ThirdPartyCode html={codeHead} position="head" />}
+        {codeBody && <ThirdPartyCode html={codeBody} position="body" />}
         <HtmlAttributes />
         <ThemeProvider>
           <LocaleWrapper menuData={menuData} mobileMenuData={mobileMenuData} mobilePagesMenuData={mobilePagesMenuData} footerCategoriesMenuData={footerCategoriesMenuData} footerPagesMenuData={footerPagesMenuData} logoData={logoData}>
             {children}
           </LocaleWrapper>
         </ThemeProvider>
+        {codeFooter && <ThirdPartyCode html={codeFooter} position="footer" />}
       </body>
+      {googleAnalyticsId && <GoogleAnalytics gaId={googleAnalyticsId} />}
     </html>
   );
 }

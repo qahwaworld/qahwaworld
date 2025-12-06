@@ -225,6 +225,11 @@ query globalOptions {
       footerCopyrightTextRightEn
       footerCopyrightTextRightAr
       footerCopyrightTextRightRu
+      googleAnalyticsId
+      googleTagManagerId
+      codeHead
+      codeBody
+      codeFooter
     }
   }
 }
