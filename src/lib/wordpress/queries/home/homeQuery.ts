@@ -54,7 +54,6 @@ export const GET_CATEGORIES_SECTION_FOR_HOME_PAGE = gql`
   query getCategoriesSectionForHomePage($lang: String!) {
     getCategorySectionData(language: $lang) {
       sectionTitle
-      sectionBackgroundColor
       viewAllButtonLabel
       viewAllButtonUrl
       category {

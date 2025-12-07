@@ -37,30 +37,31 @@ export const GET_HEADER_MENU = gql`
   }
 }
 `
-export const GET_MOBILE_CATEGORIES_MENU = gql`
-query getMobileCategoriesMenu($language: String = "en") {
-  menuItems(
-    where: {location: MOBILE_CATEGORIES, parentDatabaseId: 0, language: $language}
-  ) {
-    edges {
-      node {
-        label
-        uri
-        childItems {
-          edges {
-            node {
-              label
-              uri
-              childItems {
-                edges {
-                  node {
-                    label
-                    uri
-                    childItems {
-                      edges {
-                        node {
-                          label
-                          uri
+export const GET_MOBILE_MENU = gql`
+  query getMobileMenu($language: String = "en") {
+    menuItems(
+      where: {location: MOBILE_MENU, parentDatabaseId: 0, language: $language}
+    ) {
+      edges {
+        node {
+          label
+          uri
+          childItems {
+            edges {
+              node {
+                label
+                uri
+                childItems {
+                  edges {
+                    node {
+                      label
+                      uri
+                      childItems {
+                        edges {
+                          node {
+                            label
+                            uri
+                          }
                         }
                       }
                     }
@@ -73,47 +74,10 @@ query getMobileCategoriesMenu($language: String = "en") {
       }
     }
   }
-}
 `
 
-export const GET_MOBILE_PAGES_MENU = gql`
-query getMobilePagesMenu($language: String = "en") {
-  menuItems(
-    where: {location: MOBILE_PAGES, parentDatabaseId: 0, language: $language}
-  ) {
-    edges {
-      node {
-        label
-        uri
-        childItems {
-          edges {
-            node {
-              label
-              uri
-              childItems {
-                edges {
-                  node {
-                    label
-                    uri
-                    childItems {
-                      edges {
-                        node {
-                          label
-                          uri
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
-`
+
+
 
 export const GET_FOOTER_CATEGORIES_MENU = gql`
 query getFooterCategoriesMenu($language: String = "en") {

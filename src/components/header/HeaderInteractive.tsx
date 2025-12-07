@@ -39,16 +39,11 @@ interface HeaderInteractiveProps {
     ar: Category[];
     ru: Category[];
   };
-  mobilePagesMenuData: {
-    en: Category[];
-    ar: Category[];
-    ru: Category[];
-  };
   locale: string;
   logoData: LogoData | null;
 }
 
-export const HeaderInteractive: React.FC<HeaderInteractiveProps> = ({ menuData, mobileMenuData, mobilePagesMenuData, locale, logoData }) => {
+export const HeaderInteractive: React.FC<HeaderInteractiveProps> = ({ menuData, mobileMenuData, locale, logoData }) => {
   const { language, setLanguage, t, alternatePaths } = useLanguage();
   const { theme, setTheme } = useTheme();
   const router = useRouter();
@@ -63,7 +58,6 @@ export const HeaderInteractive: React.FC<HeaderInteractiveProps> = ({ menuData, 
   // Get current menu items based on language
   const menuItems = menuData[language] || menuData.en;
   const mobileMenuItems = mobileMenuData[language] || mobileMenuData.en;
-  const mobilePagesMenuItems = mobilePagesMenuData[language] || mobilePagesMenuData.en;
 
   // Get logo URLs with fallback to default paths
   const darkModeLogo = logoData?.darkMode?.sourceUrl || '/images/qw-white-logo.svg';
@@ -267,7 +261,6 @@ export const HeaderInteractive: React.FC<HeaderInteractiveProps> = ({ menuData, 
       {/* Mobile Menu */}
       <MobileMenu
         menuItems={mobileMenuItems}
-        mobilePagesMenuItems={mobilePagesMenuItems}
         locale={locale}
         isOpen={mobileMenuOpen}
         onClose={() => setMobileMenuOpen(false)}
@@ -275,8 +268,6 @@ export const HeaderInteractive: React.FC<HeaderInteractiveProps> = ({ menuData, 
         onLanguageChange={handleLanguageChange}
         translations={{
           search: t.search,
-          categories: t.categories,
-          pages: t.pages,
           about: t.about,
           privacy: t.privacyPolicy,
           contact: t.contactUs,

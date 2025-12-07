@@ -1,6 +1,6 @@
 
 import client from "@/lib/client/ApolloClient";
-import {GET_HEADER_MENU, GET_GLOBAL_OPTIONS, GET_MOBILE_CATEGORIES_MENU, GET_MOBILE_PAGES_MENU, GET_FOOTER_CATEGORIES_MENU, GET_FOOTER_PAGES_MENU} from "@/lib/wordpress/queries/site/headerQuery";
+import {GET_HEADER_MENU, GET_GLOBAL_OPTIONS, GET_MOBILE_MENU, GET_FOOTER_CATEGORIES_MENU, GET_FOOTER_PAGES_MENU} from "@/lib/wordpress/queries/site/headerQuery";
 
 export interface MenuItem {
   label: string;
@@ -75,63 +75,26 @@ export async function HeaderMenuData(language: string = 'en'): Promise<Category[
   }
 }
 
-export interface MobileCategoriesMenuDataType {
+export interface MobileMenuDataType {
   menuItems: {
     edges: MenuEdge[];
   };
 }
 
-export async function MobileCategoriesMenuData(language: string = 'en'): Promise<Category[]> {
+export async function MobileMenuData(language: string = 'en'): Promise<Category[]> {
   try {
     // Convert language code to lowercase format
     const languageCode = language.toLowerCase();
     
-    const result = await client.query<MobileCategoriesMenuDataType>({
-      query: GET_MOBILE_CATEGORIES_MENU,
+    const result = await client.query<MobileMenuDataType>({
+      query: GET_MOBILE_MENU,
       variables: {
         language: languageCode,
       },
       context: {
         fetchOptions: {
           next: {
-            tags: ['wordpress', `wordpress-${languageCode}`, 'wordpress-menu', 'wordpress-mobile-categories'],
-          },
-        },
-      },
-    });
-
-    if (result.error || !result.data?.menuItems?.edges) {
-      return [];
-    }
-
-    return result.data.menuItems.edges.map(edge => 
-      transformMenuItem(edge.node)
-    );
-  } catch (error) {
-    return [];
-  }
-}
-
-export interface MobilePagesMenuDataType {
-  menuItems: {
-    edges: MenuEdge[];
-  };
-}
-
-export async function MobilePagesMenuData(language: string = 'en'): Promise<Category[]> {
-  try {
-    // Convert language code to lowercase format
-    const languageCode = language.toLowerCase();
-    
-    const result = await client.query<MobilePagesMenuDataType>({
-      query: GET_MOBILE_PAGES_MENU,
-      variables: {
-        language: languageCode,
-      },
-      context: {
-        fetchOptions: {
-          next: {
-            tags: ['wordpress', `wordpress-${languageCode}`, 'wordpress-menu', 'wordpress-mobile-pages'],
+            tags: ['wordpress', `wordpress-${languageCode}`, 'wordpress-menu', 'wordpress-mobile'],
           },
         },
       },

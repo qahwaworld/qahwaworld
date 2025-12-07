@@ -24,11 +24,6 @@ interface LocaleWrapperProps {
     ar: Category[];
     ru: Category[];
   };
-  mobilePagesMenuData: {
-    en: Category[];
-    ar: Category[];
-    ru: Category[];
-  };
   footerCategoriesMenuData: {
     en: Category[];
     ar: Category[];
@@ -42,7 +37,7 @@ interface LocaleWrapperProps {
   logoData: LogoData | null;
 }
 
-export function LocaleWrapper({ children, menuData, mobileMenuData, mobilePagesMenuData, footerCategoriesMenuData, footerPagesMenuData, logoData }: LocaleWrapperProps) {
+export function LocaleWrapper({ children, menuData, mobileMenuData, footerCategoriesMenuData, footerPagesMenuData, logoData }: LocaleWrapperProps) {
   const pathname = usePathname();
 
   // Detect locale from pathname - check for complete path segments to avoid matching '/ar' in '/article'
@@ -59,7 +54,7 @@ export function LocaleWrapper({ children, menuData, mobileMenuData, mobilePagesM
         <NavigationLoader />
       </Suspense>
       <div className="min-h-screen flex flex-col">
-        <Header key={locale} locale={locale} language={locale} menuData={menuData} mobileMenuData={mobileMenuData} mobilePagesMenuData={mobilePagesMenuData} logoData={logoData} />
+        <Header key={locale} locale={locale} language={locale} menuData={menuData} mobileMenuData={mobileMenuData} logoData={logoData} />
         <main className="flex-1">
           {children}
         </main>
