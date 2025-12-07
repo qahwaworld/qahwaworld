@@ -56,6 +56,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose, local
                 <button
                   onClick={onClose}
                   className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors"
+                  aria-label="Close search"
                 >
                   <X className="w-6 h-6" />
                 </button>
