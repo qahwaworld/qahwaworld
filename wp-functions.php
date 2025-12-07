@@ -57,6 +57,8 @@ function qahwaworld_wp_setup() {
 			'primary' => esc_html__( 'Desktop Main Menu', 'qahwaworld-wp' ),
 			'mobile-categories' => esc_html__( 'Mobile Categories Menu', 'qahwaworld-wp' ),
 			'mobile-pages' => esc_html__( 'Mobile Pages Menu', 'qahwaworld-wp' ),
+			'footer-categories' => esc_html__( 'Footer Categories Menu', 'qahwaworld-wp' ),
+			'footer-pages' => esc_html__( 'Footer Pages Menu', 'qahwaworld-wp' ),
 		)
 	);
 
@@ -963,7 +965,7 @@ add_action('graphql_register_types', function () {
             // Replace 123 with your Contact Page ID
             $contact_page_id = apply_filters(
                 'wpml_object_id',
-                20557,
+                22835,
                 'page',
                 true,
                 $lang
@@ -1095,7 +1097,7 @@ add_action('graphql_register_types', function () {
             // Replace PAGE_ID with your FAQ Page ID
             $faq_page_id = apply_filters(
                 'wpml_object_id',
-                20592, 
+                22820, 
                 'page',
                 true,
                 $lang
