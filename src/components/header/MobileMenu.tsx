@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from 'next/link';
-import { Search, X, ChevronDown, ChevronRight, Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
+import { Search, X, ChevronDown, ChevronRight, Facebook, Instagram, Linkedin } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import {
   Collapsible,
@@ -24,6 +24,18 @@ const BlueskyIcon = ({ className }: { className?: string }) => (
     xmlns="http://www.w3.org/2000/svg"
   >
     <path d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 1.565.139 1.908 0 3.08 0 3.768c0 .69.378 5.65.624 6.479.815 2.736 3.713 3.66 6.383 3.364.136-.02.275-.039.415-.056-.138.022-.276.04-.415.056-3.912.58-7.387 2.005-2.83 7.078 5.013 5.19 6.87-1.113 7.823-4.308.953 3.195 2.05 9.271 7.733 4.308 4.267-4.308 1.172-6.498-2.74-7.078a8.741 8.741 0 0 1-.415-.056c.14.017.279.036.415.056 2.67.297 5.568-.628 6.383-3.364.246-.828.624-5.79.624-6.478 0-.69-.139-1.861-.902-2.206-.659-.298-1.664-.62-4.3 1.24C16.046 4.748 13.087 8.687 12 10.8Z" />
+  </svg>
+);
+
+// Custom Twitter X icon component
+const TwitterXIcon = ({ className }: { className?: string }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="currentColor"
+    className={className}
+    viewBox="0 0 16 16"
+  >
+    <path d="M12.6 0.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867 -5.07 -4.425 5.07H0.316l5.733 -6.57L0 0.75h5.063l3.495 4.633L12.601 0.75Zm-0.86 13.028h1.36L4.323 2.145H2.865z" strokeWidth="1" />
   </svg>
 );
 
@@ -172,7 +184,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({
                   <Link
                     href={getPath(item.path)}
                     onClick={onClose}
-                    className="flex-1 text-left px-3 py-2.5 rounded-md hover:bg-amber-50 dark:hover:bg-gray-700 transition-colors text-gray-700 dark:text-gray-300"
+                    className="flex-1 ltr:text-left rtl:text-right px-3 py-2.5 rounded-md hover:bg-amber-50 dark:hover:bg-gray-700 transition-colors text-gray-700 dark:text-gray-300"
                   >
                     {item.label}
                   </Link>
@@ -216,7 +228,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({
             rel="noopener noreferrer"
             className="p-2 bg-white dark:bg-gray-800 rounded-full hover:bg-amber-50 dark:hover:bg-amber-900 transition-colors border dark:border-gray-600"
           >
-            <Twitter className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+            <TwitterXIcon className="w-5 h-5 text-gray-700 dark:text-gray-300" />
           </a>
           <a
             href="https://www.instagram.com/qahwaworld"

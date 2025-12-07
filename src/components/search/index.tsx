@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { getLocalizedPath } from '@/lib/localization';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, ChevronLeft } from 'lucide-react';
 import { SEO } from '../SEO';
 import { SearchContent } from './SearchContent';
 import { getTranslations, getCategoryTranslation } from '@/lib/translations';
@@ -73,7 +73,11 @@ const SearchResultsPage = async ({ query = '', locale }: SearchResultsPageProps)
               <Link href={getPath(`/`)} className="hover:text-amber-700 dark:hover:text-amber-500">
                 {t.home}
               </Link>
-              <ChevronRight className="w-4 h-4" />
+              {locale === 'ar' ? (
+                <ChevronLeft className="w-4 h-4" />
+              ) : (
+                <ChevronRight className="w-4 h-4" />
+              )}
               <span className="text-gray-900 dark:text-gray-100">{t.searchResults}</span>
             </div>
           </div>
