@@ -8,7 +8,7 @@ import { useLanguage } from '../../contexts/LanguageContext';
 import { mockArticles } from '../../data/mockArticles';
 import { Article } from '../../types';
 import { Badge } from '../ui/badge';
-import { ChevronRight, Tag } from 'lucide-react';
+import { ChevronRight, ChevronLeft, Tag } from 'lucide-react';
 import { SEO } from '../SEO';
 import { Language } from '../../types';
 import { getAllTags } from '@/lib/actions/tag/getArticlesByTag';
@@ -80,11 +80,19 @@ const TagsPage: React.FC<TagsPageProps> = ({ tag, initialTags = [], locale: prop
               <Link href={getPath(`/`)} className="hover:text-amber-700 dark:hover:text-amber-500">
                 {t.home}
               </Link>
-              <ChevronRight className="w-4 h-4" />
+              {locale === 'ar' ? (
+                <ChevronLeft className="w-4 h-4" />
+              ) : (
+                <ChevronRight className="w-4 h-4" />
+              )}
               <Link href={getPath(`/tags`)} className="hover:text-amber-700 dark:hover:text-amber-500">
                 {t.tags}
               </Link>
-              <ChevronRight className="w-4 h-4" />
+              {locale === 'ar' ? (
+                <ChevronLeft className="w-4 h-4" />
+              ) : (
+                <ChevronRight className="w-4 h-4" />
+              )}
               <span className="text-gray-900 dark:text-gray-100">#{tag}</span>
             </div>
           </div>
@@ -190,7 +198,11 @@ const TagsPage: React.FC<TagsPageProps> = ({ tag, initialTags = [], locale: prop
             <Link href={getPath(`/`)} className="hover:text-amber-700 dark:hover:text-amber-500">
               {t.home}
             </Link>
-            <ChevronRight className="w-4 h-4" />
+            {locale === 'ar' ? (
+              <ChevronLeft className="w-4 h-4" />
+            ) : (
+              <ChevronRight className="w-4 h-4" />
+            )}
             <span className="text-gray-900 dark:text-gray-100">{t.tags}</span>
           </div>
         </div>

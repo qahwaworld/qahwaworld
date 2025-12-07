@@ -9,6 +9,14 @@ import { getLocalizedPath } from "@/lib/localization";
 import { getHomePageLatestArticles, getTrendingPostsFromHomePage, getCategoriesSectionForHomePage, getSpotlightDataForHomePage, getHomepageAdBanner } from "@/lib/actions/home/homeAction";
 
 const decodeHTMLEntities = (text: string = ""): string => {
+  if (!text) return "";
+  
+  // First, decode numeric entities (both decimal and hex)
+  let decoded = text
+    .replace(/&#x([\da-fA-F]+);/gi, (_, hex) => String.fromCharCode(parseInt(hex, 16)))
+    .replace(/&#(\d+);/g, (_, code) => String.fromCharCode(parseInt(code, 10)));
+  
+  // Then decode named entities
   const entityMap: Record<string, string> = {
     "&quot;": '"',
     "&#34;": '"',
@@ -21,18 +29,11 @@ const decodeHTMLEntities = (text: string = ""): string => {
     "&amp;": "&",
     "&nbsp;": " ",
     "&ndash;": "-",
-    "&#8211;": "-",
     "&mdash;": "-",
-    "&#8212;": "-",
     "&hellip;": "...",
-    "&#8230;": "...",
   };
 
-  let decoded = text.replace(/&[a-zA-Z0-9#]+;/g, (entity) => entityMap[entity] || entity);
-
-  decoded = decoded
-    .replace(/&#x([\da-fA-F]+);/g, (_, hex) => String.fromCharCode(parseInt(hex, 16)))
-    .replace(/&#(\d+);/g, (_, code) => String.fromCharCode(parseInt(code, 10)));
+  decoded = decoded.replace(/&[a-zA-Z]+;/g, (entity) => entityMap[entity] || entity);
 
   return decoded;
 };

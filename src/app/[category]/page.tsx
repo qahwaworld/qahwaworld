@@ -7,7 +7,7 @@ import { getTranslations, getCategoryTranslation } from '@/lib/translations';
 import { getLocalizedPath } from '@/lib/localization';
 import Link from 'next/link';
 import { CategoryContent } from '@/components/category/CategoryContent';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, ChevronLeft } from 'lucide-react';
 import CategoryLanguageHandler from '@/components/category/CategoryLanguageHandler';
 import { JsonLdSchema } from '@/components/JsonLdSchema';
 import { PageSEO } from '@/lib/actions/seo/pagesSeoAction';
@@ -313,7 +313,11 @@ export default async function CategoryRoute({ params, locale = 'en' }: Props) {
             >
               {t.home}
             </Link>
-            <ChevronRight className="w-4 h-4" />
+            {locale === 'ar' ? (
+              <ChevronLeft className="w-4 h-4" />
+            ) : (
+              <ChevronRight className="w-4 h-4" />
+            )}
             <span className="text-gray-900 dark:text-gray-100">
               {categoryName}
             </span>

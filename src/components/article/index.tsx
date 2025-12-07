@@ -11,17 +11,59 @@ import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import {
   Facebook,
-  Twitter,
   Linkedin,
   Link2,
   Clock,
   User,
   Calendar,
   ChevronRight,
+  ChevronLeft,
   X,
 } from "lucide-react";
 import { toast } from "sonner";
 import { Language } from "../../types";
+
+// Custom Twitter X icon component
+const TwitterXIcon = ({ className }: { className?: string }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="currentColor"
+    className={className}
+    viewBox="0 0 16 16"
+  >
+    <path d="M12.6 0.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867 -5.07 -4.425 5.07H0.316l5.733 -6.57L0 0.75h5.063l3.495 4.633L12.601 0.75Zm-0.86 13.028h1.36L4.323 2.145H2.865z" strokeWidth="1" />
+  </svg>
+);
+
+const decodeHTMLEntities = (text: string = ""): string => {
+  if (!text) return "";
+  
+  // First, decode numeric entities (both decimal and hex)
+  let decoded = text
+    .replace(/&#x([\da-fA-F]+);/gi, (_, hex) => String.fromCharCode(parseInt(hex, 16)))
+    .replace(/&#(\d+);/g, (_, code) => String.fromCharCode(parseInt(code, 10)));
+  
+  // Then decode named entities
+  const entityMap: Record<string, string> = {
+    "&quot;": '"',
+    "&#34;": '"',
+    "&#8220;": '"',
+    "&#8221;": '"',
+    "&#8216;": "'",
+    "&#8217;": "'",
+    "&#39;": "'",
+    "&apos;": "'",
+    "&amp;": "&",
+    "&nbsp;": " ",
+    "&ndash;": "-",
+    "&mdash;": "-",
+    "&hellip;": "...",
+  };
+
+  decoded = decoded.replace(/&[a-zA-Z]+;/g, (entity) => entityMap[entity] || entity);
+
+  return decoded;
+};
 
 const getCategoryTranslation = (
   category: string,
@@ -157,16 +199,24 @@ const ArticleDetailPage: React.FC<ArticleDetailPageProps> = ({
               >
                 {t.home}
               </Link>
-              <ChevronRight className="w-4 h-4" />
+              {locale === 'ar' ? (
+                <ChevronLeft className="w-4 h-4" />
+              ) : (
+                <ChevronRight className="w-4 h-4" />
+              )}
               <Link
                 href={getPath(`/${encodeURIComponent(article.categorySlug || article.category.toLowerCase().replace(/\s+/g, '-'))}`)}
                 className="hover:text-amber-700 dark:hover:text-amber-500"
               >
                 {getCategoryTranslation(article.category, language)}
               </Link>
-              <ChevronRight className="w-4 h-4" />
+              {locale === 'ar' ? (
+                <ChevronLeft className="w-4 h-4" />
+              ) : (
+                <ChevronRight className="w-4 h-4" />
+              )}
               <span className="text-gray-900 dark:text-gray-100 line-clamp-1">
-                {article.title}
+                {decodeHTMLEntities(article.title)}
               </span>
             </div>
           </div>
@@ -192,7 +242,7 @@ const ArticleDetailPage: React.FC<ArticleDetailPageProps> = ({
               <div className="w-full overflow-hidden">
                 <img
                   src={article.image}
-                  alt={article.title}
+                  alt={decodeHTMLEntities(article.title)}
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -205,7 +255,7 @@ const ArticleDetailPage: React.FC<ArticleDetailPageProps> = ({
 
                 {/* Title - Reduced size on mobile */}
                 <h1 className="text-3xl md:text-4xl mb-4 md:mb-6 text-amber-900 dark:text-amber-100">
-                  {article.title}
+                  {decodeHTMLEntities(article.title)}
                 </h1>
 
                 {/* Meta Information */}
@@ -243,7 +293,7 @@ const ArticleDetailPage: React.FC<ArticleDetailPageProps> = ({
                     onClick={() => handleShare("twitter")}
                     className="gap-2"
                   >
-                    <Twitter className="w-4 h-4" />
+                    <TwitterXIcon className="w-4 h-4" />
                   </Button>
                   <Button
                     variant="outline"
@@ -265,11 +315,9 @@ const ArticleDetailPage: React.FC<ArticleDetailPageProps> = ({
 
                 {/* Article Content */}
                 <div className="post-content prose prose-lg max-w-none mb-8 text-gray-700 dark:text-gray-300">
-                  {/* Only render excerpt as plain text, not HTML */}
-                  {article.excerpt && <p>{stripHtml(article.excerpt)}</p>}
                   {/* Render content as HTML */}
                   {article.content && (
-                    <div dangerouslySetInnerHTML={{ __html: article.content }} />
+                    <div dangerouslySetInnerHTML={{ __html: decodeHTMLEntities(article.content) }} />
                   )}
 
                   {/* Gallery Section */}
@@ -303,7 +351,7 @@ const ArticleDetailPage: React.FC<ArticleDetailPageProps> = ({
                   {article.contentAfterGallery && (
                     <div 
                       className="prose prose-lg max-w-none my-8 text-gray-700 dark:text-gray-300"
-                      dangerouslySetInnerHTML={{ __html: article.contentAfterGallery }} 
+                      dangerouslySetInnerHTML={{ __html: decodeHTMLEntities(article.contentAfterGallery) }} 
                     />
                   )}
                 </div>
@@ -432,7 +480,7 @@ const ArticleDetailPage: React.FC<ArticleDetailPageProps> = ({
                         <div className="md:col-span-1 h-64">
                           <img
                             src={relArticle.image}
-                            alt={relArticle.title}
+                            alt={decodeHTMLEntities(relArticle.title)}
                             className="w-full h-full object-cover"
                           />
                         </div>
@@ -441,10 +489,10 @@ const ArticleDetailPage: React.FC<ArticleDetailPageProps> = ({
                             {relArticle.category}
                           </Badge>
                           <h3 className="text-2xl mb-3 text-amber-900 dark:text-amber-100 hover:text-amber-700 dark:hover:text-amber-500 transition-colors">
-                            {relArticle.title}
+                            {decodeHTMLEntities(relArticle.title)}
                           </h3>
                           <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">
-                            {stripHtml(relArticle.excerpt)}
+                            {decodeHTMLEntities(stripHtml(relArticle.excerpt))}
                           </p>
                           <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
                             <span>{relArticle.date}</span>

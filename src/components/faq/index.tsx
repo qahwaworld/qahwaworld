@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { getLocalizedPath } from '@/lib/localization';
-import { ChevronRight, HelpCircle } from 'lucide-react';
+import { ChevronRight, ChevronLeft, HelpCircle } from 'lucide-react';
 import {
   Accordion,
   AccordionContent,
@@ -43,7 +43,11 @@ const FAQPage: React.FC<FAQPageProps> = ({ locale, faqData }) => {
             <Link href={getPath(`/`)} className="hover:text-amber-700 dark:hover:text-amber-500">
               {t.home}
             </Link>
-            <ChevronRight className="w-4 h-4" />
+            {locale === 'ar' ? (
+              <ChevronLeft className="w-4 h-4" />
+            ) : (
+              <ChevronRight className="w-4 h-4" />
+            )}
             <span className="text-gray-900 dark:text-gray-100">
               {t.faq.toUpperCase()}
             </span>

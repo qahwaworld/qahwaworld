@@ -8,7 +8,7 @@ import { calculateReadTime, formatDate, stripHtml } from '@/lib/utils';
 import { getTranslations, getCategoryTranslation } from '@/lib/translations';
 import { getLocalizedPath } from '@/lib/localization';
 import Link from 'next/link';
-import { ChevronRight, User } from 'lucide-react';
+import { ChevronRight, ChevronLeft, User } from 'lucide-react';
 import { Article } from '@/types';
 import { Metadata } from 'next';
 import { JsonLdSchema } from '@/components/JsonLdSchema';
@@ -351,7 +351,11 @@ export default async function AuthorPage({ params, locale = 'en' }: Props) {
               >
                 {t.home}
               </Link>
-              <ChevronRight className="w-4 h-4" />
+              {locale === 'ar' ? (
+                <ChevronLeft className="w-4 h-4" />
+              ) : (
+                <ChevronRight className="w-4 h-4" />
+              )}
               <span className="text-gray-900 dark:text-gray-100">{authorName}</span>
             </div>
           </div>
