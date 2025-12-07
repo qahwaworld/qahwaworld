@@ -129,7 +129,6 @@ export interface CategorySectionPost {
 
 export interface CategorySectionItem {
   sectionTitle: string;
-  sectionBackgroundColor: string;
   viewAllButtonLabel: string;
   viewAllButtonUrl: string;
   category: CategorySectionCategory;

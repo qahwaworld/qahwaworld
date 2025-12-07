@@ -267,7 +267,7 @@ const HomePage: React.FC<HomePageProps> = async ({ locale }) => {
 
               {/* Right Sidebar - Trending */}
               <aside className="lg:col-span-3 order-3 lg:order-3">
-                <div className="bg-white dark:bg-gray-800 px-6 py-6 sticky top-24">
+                <div className="bg-[#ffedd4] lg:bg-white dark:bg-gray-800 px-6 py-6 sticky top-24">
                   <div className="flex items-center justify-between mb-6 pb-3 border-b dark:border-gray-700">
                     <h2 className="text-amber-900 dark:text-amber-100 text-xl">
                       {t.trending}

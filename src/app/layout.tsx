@@ -3,7 +3,7 @@ import { ThemeProvider } from '@/contexts/ThemeContext';
 import { LocaleWrapper } from '@/components/LocaleWrapper';
 import { HtmlAttributes } from '@/components/HtmlAttributes';
 import { ThirdPartyCode } from '@/components/ThirdPartyCode';
-import { HeaderMenuData, MobileCategoriesMenuData, MobilePagesMenuData, FooterCategoriesMenuData, FooterPagesMenuData, getGlobalOptions } from '@/lib/actions/site/headerMenuAction';
+import { HeaderMenuData, MobileMenuData, FooterCategoriesMenuData, FooterPagesMenuData, getGlobalOptions } from '@/lib/actions/site/headerMenuAction';
 import './globals.css';
 import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google';
 
@@ -18,16 +18,13 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   // Fetch menu data for all languages and global options on server side
-  const [enMenuItems, arMenuItems, ruMenuItems, enMobileMenuItems, arMobileMenuItems, ruMobileMenuItems, enMobilePagesItems, arMobilePagesItems, ruMobilePagesItems, enFooterCategoriesItems, arFooterCategoriesItems, ruFooterCategoriesItems, enFooterPagesItems, arFooterPagesItems, ruFooterPagesItems, logoData] = await Promise.all([
+  const [enMenuItems, arMenuItems, ruMenuItems, enMobileMenuItems, arMobileMenuItems, ruMobileMenuItems, enFooterCategoriesItems, arFooterCategoriesItems, ruFooterCategoriesItems, enFooterPagesItems, arFooterPagesItems, ruFooterPagesItems, logoData] = await Promise.all([
     HeaderMenuData('en'),
     HeaderMenuData('ar'),
     HeaderMenuData('ru'),
-    MobileCategoriesMenuData('en'),
-    MobileCategoriesMenuData('ar'),
-    MobileCategoriesMenuData('ru'),
-    MobilePagesMenuData('en'),
-    MobilePagesMenuData('ar'),
-    MobilePagesMenuData('ru'),
+    MobileMenuData('en'),
+    MobileMenuData('ar'),
+    MobileMenuData('ru'),
     FooterCategoriesMenuData('en'),
     FooterCategoriesMenuData('ar'),
     FooterCategoriesMenuData('ru'),
@@ -47,12 +44,6 @@ export default async function RootLayout({
     en: enMobileMenuItems,
     ar: arMobileMenuItems,
     ru: ruMobileMenuItems,
-  };
-
-  const mobilePagesMenuData = {
-    en: enMobilePagesItems,
-    ar: arMobilePagesItems,
-    ru: ruMobilePagesItems,
   };
 
   const footerCategoriesMenuData = {
@@ -84,7 +75,7 @@ export default async function RootLayout({
         {codeBody && <ThirdPartyCode html={codeBody} position="body" />}
         <HtmlAttributes />
         <ThemeProvider>
-          <LocaleWrapper menuData={menuData} mobileMenuData={mobileMenuData} mobilePagesMenuData={mobilePagesMenuData} footerCategoriesMenuData={footerCategoriesMenuData} footerPagesMenuData={footerPagesMenuData} logoData={logoData}>
+          <LocaleWrapper menuData={menuData} mobileMenuData={mobileMenuData} footerCategoriesMenuData={footerCategoriesMenuData} footerPagesMenuData={footerPagesMenuData} logoData={logoData}>
             {children}
           </LocaleWrapper>
         </ThemeProvider>
