@@ -196,7 +196,7 @@ export const HeaderInteractive: React.FC<HeaderInteractiveProps> = ({ menuData, 
             <button
               onClick={() => setSearchModalOpen(true)}
               className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors"
-              aria-label="Search"
+              aria-label="Open search modal"
             >
               <Search className="w-5 h-5 text-gray-700 dark:text-gray-300" />
             </button>
@@ -204,6 +204,7 @@ export const HeaderInteractive: React.FC<HeaderInteractiveProps> = ({ menuData, 
             <Button
               onClick={() => setSubscribeModalOpen(true)}
               className="bg-amber-700 hover:bg-amber-800 shadow-sm"
+              aria-label="Open subscribe modal"
             >
               {t.subscribe}
             </Button>
@@ -227,6 +228,7 @@ export const HeaderInteractive: React.FC<HeaderInteractiveProps> = ({ menuData, 
           <button
             className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle mobile menu"
           >
             {mobileMenuOpen ? (
               <X className="w-6 h-6 text-gray-700 dark:text-gray-300" />
@@ -301,8 +303,13 @@ export const HeaderInteractive: React.FC<HeaderInteractiveProps> = ({ menuData, 
         onClose={() => setSubscribeModalOpen(false)}
         translations={{
           subscribe: t.subscribe,
-          email: "Email",
+          email: t.emailPlaceholder,
           close: "Close",
+          toastEmailRequired: t.toastEmailRequired,
+          toastEmailAlreadySubscribed: t.toastEmailAlreadySubscribed,
+          toastSubscriptionSuccess: t.toastSubscriptionSuccess,
+          toastSubscriptionError: t.toastSubscriptionError,
+          toastSubscribing: t.toastSubscribing,
         }}
       />
     </header>

@@ -14,18 +14,62 @@ interface SubscribeModalProps {
     subscribe: string;
     email: string;
     close: string;
+    toastEmailRequired: string;
+    toastEmailAlreadySubscribed: string;
+    toastSubscriptionSuccess: string;
+    toastSubscriptionError: string;
+    toastSubscribing: string;
   };
 }
 
 export const SubscribeModal: React.FC<SubscribeModalProps> = ({ isOpen, onClose, translations }) => {
   const [email, setEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubscribe = (e: React.FormEvent) => {
+  const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email.trim()) {
-      toast.success("Successfully subscribed!");
+    
+    if (!email.trim()) {
+      toast.error(translations.toastEmailRequired);
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const response = await fetch("/api/mc/subscribeUser", {
+        body: JSON.stringify({
+          email: email.trim(),
+          firstName: "",
+          lastName: "",
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+      });
+
+      const json = await response.json();
+      const { data, error } = json;
+
+      if (error) {
+        // Check if error is the "already subscribed" message and use localized version
+        const errorMessage = error.toLowerCase().includes('already subscribed') 
+          ? translations.toastEmailAlreadySubscribed 
+          : error;
+        toast.error(errorMessage);
+        setIsLoading(false);
+        return;
+      }
+
+      toast.success(translations.toastSubscriptionSuccess);
       onClose();
       setEmail("");
+    } catch (error) {
+      console.error("Subscription error:", error);
+      toast.error(translations.toastSubscriptionError);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -47,7 +91,7 @@ export const SubscribeModal: React.FC<SubscribeModalProps> = ({ isOpen, onClose,
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
-              className="bg-white dark:bg-gray-900 rounded-lg shadow-2xl p-8 max-w-md w-full mx-4"
+              className="bg-white dark:bg-gray-900 rounded-lg shadow-2xl p-8 max-w-md w-full mx-4 pt-40"
             >
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-3">
@@ -60,7 +104,8 @@ export const SubscribeModal: React.FC<SubscribeModalProps> = ({ isOpen, onClose,
                 </div>
                 <button
                   onClick={onClose}
-                  className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors"
+                  className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors newsletter-close-button"
+                  aria-label="Close subscribe"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -82,9 +127,10 @@ export const SubscribeModal: React.FC<SubscribeModalProps> = ({ isOpen, onClose,
                 <Button
                   type="submit"
                   className="w-full bg-amber-700 hover:bg-amber-800"
+                  disabled={isLoading}
                 >
                   <Mail className="w-4 h-4 mr-2" />
-                  {translations.subscribe}
+                  {isLoading ? translations.toastSubscribing : translations.subscribe}
                 </Button>
               </form>
             </motion.div>

@@ -94,4 +94,11 @@ export interface Translation {
   allTags: string;
   searchResults: string;
   searchArticles: string;
+
+  // Toast messages
+  toastEmailRequired: string;
+  toastEmailAlreadySubscribed: string;
+  toastSubscriptionSuccess: string;
+  toastSubscriptionError: string;
+  toastSubscribing: string;
 }

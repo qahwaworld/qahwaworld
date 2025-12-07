@@ -54,6 +54,11 @@ const translations: Record<Language, Translation> = {
     allTags: 'All Tags',
     searchResults: 'Search Results',
     searchArticles: 'Search Articles',
+    toastEmailRequired: 'Please enter a valid email address.',
+    toastEmailAlreadySubscribed: 'Email already subscribed.',
+    toastSubscriptionSuccess: 'You have successfully subscribed!',
+    toastSubscriptionError: 'Something went wrong. Please try again later.',
+    toastSubscribing: 'Subscribing...',
   },
   ar: {
     search: 'بحث',
@@ -105,6 +110,11 @@ const translations: Record<Language, Translation> = {
     allTags: 'جميع الوسوم',
     searchResults: 'نتائج البحث',
     searchArticles: 'البحث في المقالات',
+    toastEmailRequired: 'يرجى إدخال عنوان بريد إلكتروني صالح.',
+    toastEmailAlreadySubscribed: 'البريد الإلكتروني مشترك بالفعل.',
+    toastSubscriptionSuccess: 'لقد اشتركت بنجاح!',
+    toastSubscriptionError: 'حدث خطأ ما. يرجى المحاولة مرة أخرى لاحقاً.',
+    toastSubscribing: 'جاري الاشتراك...',
   },
   ru: {
     search: 'Поиск',
@@ -156,6 +166,11 @@ const translations: Record<Language, Translation> = {
     allTags: 'Все Теги',
     searchResults: 'Результаты поиска',
     searchArticles: 'Поиск статей',
+    toastEmailRequired: 'Пожалуйста, введите действительный адрес электронной почты.',
+    toastEmailAlreadySubscribed: 'Электронная почта уже подписана.',
+    toastSubscriptionSuccess: 'Вы успешно подписались!',
+    toastSubscriptionError: 'Что-то пошло не так. Пожалуйста, попробуйте позже.',
+    toastSubscribing: 'Подписка...',
   },
 };
 
