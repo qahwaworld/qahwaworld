@@ -1,13 +1,12 @@
-'use client';
+"use client";
 
 import React from "react";
-import Link from 'next/link';
-import { useParams } from 'next/navigation';
+import Link from "next/link";
+import { useParams } from "next/navigation";
 import { useLanguage } from "../contexts/LanguageContext";
 import { getLocalizedPath } from "@/lib/localization";
 import { Facebook, Instagram, Linkedin, Cloud } from "lucide-react";
 import { LogoData, Category } from "@/lib/actions/site/headerMenuAction";
-
 
 // Custom Bluesky icon component
 const BlueskyIcon = ({ className }: { className?: string }) => (
@@ -29,7 +28,10 @@ const TwitterXIcon = ({ className }: { className?: string }) => (
     className={className}
     viewBox="0 0 16 16"
   >
-    <path d="M12.6 0.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867 -5.07 -4.425 5.07H0.316l5.733 -6.57L0 0.75h5.063l3.495 4.633L12.601 0.75Zm-0.86 13.028h1.36L4.323 2.145H2.865z" strokeWidth="1" />
+    <path
+      d="M12.6 0.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867 -5.07 -4.425 5.07H0.316l5.733 -6.57L0 0.75h5.063l3.495 4.633L12.601 0.75Zm-0.86 13.028h1.36L4.323 2.145H2.865z"
+      strokeWidth="1"
+    />
   </svg>
 );
 
@@ -47,16 +49,24 @@ interface FooterProps {
   };
 }
 
-export const Footer: React.FC<FooterProps> = ({ logoData, footerCategoriesMenuData, footerPagesMenuData }) => {
+export const Footer: React.FC<FooterProps> = ({
+  logoData,
+  footerCategoriesMenuData,
+  footerPagesMenuData,
+}) => {
   const { language } = useLanguage();
   const params = useParams() as { locale?: string };
-  const locale = params?.locale || 'en';
+  const locale = params?.locale || "en";
   const getPath = (path: string) => getLocalizedPath(path, locale);
 
   // Get current language menu data
-  const currentLanguage = language.toLowerCase() as 'en' | 'ar' | 'ru';
-  const categories = footerCategoriesMenuData[currentLanguage] || footerCategoriesMenuData.en || [];
-  const pages = footerPagesMenuData[currentLanguage] || footerPagesMenuData.en || [];
+  const currentLanguage = language.toLowerCase() as "en" | "ar" | "ru";
+  const categories =
+    footerCategoriesMenuData[currentLanguage] ||
+    footerCategoriesMenuData.en ||
+    [];
+  const pages =
+    footerPagesMenuData[currentLanguage] || footerPagesMenuData.en || [];
 
   // Get dynamic footer content based on language
   const getFooterDescription = () => {
@@ -67,9 +77,11 @@ export const Footer: React.FC<FooterProps> = ({ logoData, footerCategoriesMenuDa
         ? "Исследуйте мир кофе через истории, культуру и сообщество"
         : "Explore the world of coffee through stories, culture, and community";
     }
-    
-    if (language === "ar") return logoData.footerDescriptionAr || logoData.footerDescriptionEn || "";
-    if (language === "ru") return logoData.footerDescriptionRu || logoData.footerDescriptionEn || "";
+
+    if (language === "ar")
+      return logoData.footerDescriptionAr || logoData.footerDescriptionEn || "";
+    if (language === "ru")
+      return logoData.footerDescriptionRu || logoData.footerDescriptionEn || "";
     return logoData.footerDescriptionEn || "";
   };
 
@@ -83,9 +95,19 @@ export const Footer: React.FC<FooterProps> = ({ logoData, footerCategoriesMenuDa
           : "All rights reserved"
       }.`;
     }
-    
-    if (language === "ar") return logoData.footerCopyrightTextLeftAr || logoData.footerCopyrightTextLeftEn || "";
-    if (language === "ru") return logoData.footerCopyrightTextLeftRu || logoData.footerCopyrightTextLeftEn || "";
+
+    if (language === "ar")
+      return (
+        logoData.footerCopyrightTextLeftAr ||
+        logoData.footerCopyrightTextLeftEn ||
+        ""
+      );
+    if (language === "ru")
+      return (
+        logoData.footerCopyrightTextLeftRu ||
+        logoData.footerCopyrightTextLeftEn ||
+        ""
+      );
     return logoData.footerCopyrightTextLeftEn || "";
   };
 
@@ -97,14 +119,24 @@ export const Footer: React.FC<FooterProps> = ({ logoData, footerCategoriesMenuDa
         ? "Сделано с любовью Qahwa World"
         : "Made with love by Qahwa World";
     }
-    
-    if (language === "ar") return logoData.footerCopyrightTextRightAr || logoData.footerCopyrightTextRightEn || "";
-    if (language === "ru") return logoData.footerCopyrightTextRightRu || logoData.footerCopyrightTextRightEn || "";
+
+    if (language === "ar")
+      return (
+        logoData.footerCopyrightTextRightAr ||
+        logoData.footerCopyrightTextRightEn ||
+        ""
+      );
+    if (language === "ru")
+      return (
+        logoData.footerCopyrightTextRightRu ||
+        logoData.footerCopyrightTextRightEn ||
+        ""
+      );
     return logoData.footerCopyrightTextRightEn || "";
   };
 
-  const logoUrl = logoData?.darkMode?.sourceUrl || '/images/qw-white-logo.svg';
-  const logoAlt = logoData?.darkMode?.altText || 'Qahwa World Logo';
+  const logoUrl = logoData?.darkMode?.sourceUrl || "/images/qw-white-logo.svg";
+  const logoAlt = logoData?.darkMode?.altText || "Qahwa World Logo";
 
   return (
     <footer className="bg-gradient-to-b from-gray-900 to-black text-white border-t border-gray-800">
@@ -113,7 +145,10 @@ export const Footer: React.FC<FooterProps> = ({ logoData, footerCategoriesMenuDa
           {/* Column 1: Logo, Tagline & Social Icons */}
           <div className="space-y-6">
             {/* Logo */}
-            <Link href={getPath('/')} className="flex items-center gap-3 cursor-pointer group">
+            <Link
+              href={getPath("/")}
+              className="flex items-center gap-3 cursor-pointer group"
+            >
               <img src={logoUrl} alt={logoAlt} className="h-10" />
             </Link>
 
@@ -128,6 +163,7 @@ export const Footer: React.FC<FooterProps> = ({ logoData, footerCategoriesMenuDa
                 href="https://www.facebook.com/Qahwaworld/"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Facebook"
                 className="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center hover:border-amber-500 hover:text-amber-500 transition-all hover:scale-110"
               >
                 <Facebook className="w-5 h-5" />
@@ -136,6 +172,7 @@ export const Footer: React.FC<FooterProps> = ({ logoData, footerCategoriesMenuDa
                 href="https://x.com/qahwaworld"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Twitter X"
                 className="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center hover:border-amber-500 hover:text-amber-500 transition-all hover:scale-110"
               >
                 <TwitterXIcon className="w-5 h-5" />
@@ -144,6 +181,7 @@ export const Footer: React.FC<FooterProps> = ({ logoData, footerCategoriesMenuDa
                 href="https://www.instagram.com/qahwaworld"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Instagram"
                 className="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center hover:border-amber-500 hover:text-amber-500 transition-all hover:scale-110"
               >
                 <Instagram className="w-5 h-5" />
@@ -152,6 +190,7 @@ export const Footer: React.FC<FooterProps> = ({ logoData, footerCategoriesMenuDa
                 href="https://www.linkedin.com/in/qahwaworld"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="LinkedIn"
                 className="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center hover:border-amber-500 hover:text-amber-500 transition-all hover:scale-110"
               >
                 <Linkedin className="w-5 h-5" />
@@ -160,6 +199,7 @@ export const Footer: React.FC<FooterProps> = ({ logoData, footerCategoriesMenuDa
                 href="https://bsky.app/profile/qahwaworld.bsky.social"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Bluesky"
                 className="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center hover:border-amber-500 hover:text-amber-500 transition-all hover:scale-110"
               >
                 <BlueskyIcon className="w-5 h-5" />
@@ -189,7 +229,9 @@ export const Footer: React.FC<FooterProps> = ({ logoData, footerCategoriesMenuDa
                   </li>
                 ))
               ) : (
-                <li className="text-gray-500 text-sm">No categories available</li>
+                <li className="text-gray-500 text-sm">
+                  No categories available
+                </li>
               )}
             </ul>
           </div>
@@ -225,12 +267,8 @@ export const Footer: React.FC<FooterProps> = ({ logoData, footerCategoriesMenuDa
         {/* Bottom Bar */}
         <div className="mt-12 pt-8 border-t border-gray-800">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-gray-500 text-sm">
-              {getCopyrightLeft()}
-            </p>
-            <p className="text-gray-500 text-sm">
-              {getCopyrightRight()}
-            </p>
+            <p className="text-gray-500 text-sm">{getCopyrightLeft()}</p>
+            <p className="text-gray-500 text-sm">{getCopyrightRight()}</p>
           </div>
         </div>
       </div>

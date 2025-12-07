@@ -1,13 +1,27 @@
-'use client';
+"use client";
 
 import React, { useState, useEffect } from "react";
-import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
-import { Search, Menu, X, Mail, Moon, Sun, Facebook, Instagram, Linkedin } from "lucide-react";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import {
+  Search,
+  Menu,
+  X,
+  Mail,
+  Moon,
+  Sun,
+  Facebook,
+  Instagram,
+  Linkedin,
+} from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useTheme } from "@/contexts/ThemeContext";
 import { getLocalizedPath } from "@/lib/localization";
-import { Category, HeaderMenuData, LogoData } from "@/lib/actions/site/headerMenuAction";
+import {
+  Category,
+  HeaderMenuData,
+  LogoData,
+} from "@/lib/actions/site/headerMenuAction";
 import { Button } from "@/components/ui/button";
 import { Language } from "@/types";
 import { NavigationMenu } from "./NavigationMenu";
@@ -36,7 +50,10 @@ const TwitterXIcon = ({ className }: { className?: string }) => (
     className={className}
     viewBox="0 0 16 16"
   >
-    <path d="M12.6 0.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867 -5.07 -4.425 5.07H0.316l5.733 -6.57L0 0.75h5.063l3.495 4.633L12.601 0.75Zm-0.86 13.028h1.36L4.323 2.145H2.865z" strokeWidth="1" />
+    <path
+      d="M12.6 0.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867 -5.07 -4.425 5.07H0.316l5.733 -6.57L0 0.75h5.063l3.495 4.633L12.601 0.75Zm-0.86 13.028h1.36L4.323 2.145H2.865z"
+      strokeWidth="1"
+    />
   </svg>
 );
 
@@ -55,7 +72,12 @@ interface HeaderInteractiveProps {
   logoData: LogoData | null;
 }
 
-export const HeaderInteractive: React.FC<HeaderInteractiveProps> = ({ menuData, mobileMenuData, locale, logoData }) => {
+export const HeaderInteractive: React.FC<HeaderInteractiveProps> = ({
+  menuData,
+  mobileMenuData,
+  locale,
+  logoData,
+}) => {
   const { language, setLanguage, t, alternatePaths } = useLanguage();
   const { theme, setTheme } = useTheme();
   const router = useRouter();
@@ -72,15 +94,17 @@ export const HeaderInteractive: React.FC<HeaderInteractiveProps> = ({ menuData, 
   const mobileMenuItems = mobileMenuData[language] || mobileMenuData.en;
 
   // Get logo URLs with fallback to default paths
-  const darkModeLogo = logoData?.darkMode?.sourceUrl || '/images/qw-white-logo.svg';
-  const lightModeLogo = logoData?.lightMode?.sourceUrl || '/images/qahwaworld-logo.svg';
-  const stickyLogo = logoData?.sticky?.sourceUrl || '/images/qw-icon.svg';
-  const darkModeAlt = logoData?.darkMode?.altText || 'Qahwa World Logo';
-  const lightModeAlt = logoData?.lightMode?.altText || 'Qahwa World Logo';
-  const stickyAlt = logoData?.sticky?.altText || 'Qahwa World Logo';
+  const darkModeLogo =
+    logoData?.darkMode?.sourceUrl || "/images/qw-white-logo.svg";
+  const lightModeLogo =
+    logoData?.lightMode?.sourceUrl || "/images/qahwaworld-logo.svg";
+  const stickyLogo = logoData?.sticky?.sourceUrl || "/images/qw-icon.svg";
+  const darkModeAlt = logoData?.darkMode?.altText || "Qahwa World Logo";
+  const lightModeAlt = logoData?.lightMode?.altText || "Qahwa World Logo";
+  const stickyAlt = logoData?.sticky?.altText || "Qahwa World Logo";
 
   // Avoid hydration mismatch by using light theme assets until mounted on client
-  const isDarkTheme = mounted && theme === 'dark';
+  const isDarkTheme = mounted && theme === "dark";
 
   React.useEffect(() => {
     setMounted(true);
@@ -107,18 +131,20 @@ export const HeaderInteractive: React.FC<HeaderInteractiveProps> = ({ menuData, 
 
     // Remove current locale from pathname - check for complete path segments
     let pathWithoutLocale = pathname;
-    if (pathname === '/ar' || pathname.startsWith('/ar/')) {
-      pathWithoutLocale = pathname.substring(3) || '/';
-    } else if (pathname === '/ru' || pathname.startsWith('/ru/')) {
-      pathWithoutLocale = pathname.substring(3) || '/';
+    if (pathname === "/ar" || pathname.startsWith("/ar/")) {
+      pathWithoutLocale = pathname.substring(3) || "/";
+    } else if (pathname === "/ru" || pathname.startsWith("/ru/")) {
+      pathWithoutLocale = pathname.substring(3) || "/";
     }
 
     // Build new path
     let newPath: string;
-    if (newLang === 'en') {
+    if (newLang === "en") {
       newPath = pathWithoutLocale;
     } else {
-      newPath = `/${newLang}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`;
+      newPath = `/${newLang}${
+        pathWithoutLocale === "/" ? "" : pathWithoutLocale
+      }`;
     }
 
     router.push(newPath);
@@ -129,14 +155,16 @@ export const HeaderInteractive: React.FC<HeaderInteractiveProps> = ({ menuData, 
   return (
     <header
       ref={headerRef}
-      className={`bg-white dark:bg-gray-900 border-b dark:border-gray-700 ${isScrolled ? "fixed" : "sticky"
-        } top-0 left-0 right-0 z-40 shadow-sm will-change-transform transition-all duration-300`}
+      className={`bg-white dark:bg-gray-900 border-b dark:border-gray-700 ${
+        isScrolled ? "fixed" : "sticky"
+      } top-0 left-0 right-0 z-40 shadow-sm will-change-transform transition-all duration-300`}
     >
       <div className="container mx-auto px-4">
         {/* Desktop Header */}
         <div
-          className={`hidden lg:grid grid-cols-3 items-center gap-4 overflow-hidden transition-[height,padding] duration-300 ease-in-out will-change-[height] ${isScrolled ? "h-0 py-0" : "h-20 py-4"
-            }`}
+          className={`hidden lg:grid grid-cols-3 items-center gap-4 overflow-hidden transition-[height,padding] duration-300 ease-in-out will-change-[height] ${
+            isScrolled ? "h-0 py-0" : "h-20 py-4"
+          }`}
         >
           {/* Left: Social Icons */}
           <div className="flex items-center gap-3">
@@ -144,6 +172,7 @@ export const HeaderInteractive: React.FC<HeaderInteractiveProps> = ({ menuData, 
               href="https://www.facebook.com/Qahwaworld/"
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Qahwa World on Facebook"
               className="p-2 bg-white dark:bg-gray-800 rounded-full hover:bg-amber-50 dark:hover:bg-amber-900 transition-colors border dark:border-gray-600"
             >
               <Facebook className="w-5 h-5 text-gray-700 dark:text-gray-300" />
@@ -152,6 +181,7 @@ export const HeaderInteractive: React.FC<HeaderInteractiveProps> = ({ menuData, 
               href="https://x.com/qahwaworld"
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Qahwa World on Twitter X"
               className="p-2 bg-white dark:bg-gray-800 rounded-full hover:bg-amber-50 dark:hover:bg-amber-900 transition-colors border dark:border-gray-600"
             >
               <TwitterXIcon className="w-5 h-5 text-gray-700 dark:text-gray-300" />
@@ -160,6 +190,7 @@ export const HeaderInteractive: React.FC<HeaderInteractiveProps> = ({ menuData, 
               href="https://www.instagram.com/qahwaworld"
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Qahwa World on Instagram"
               className="p-2 bg-white dark:bg-gray-800 rounded-full hover:bg-amber-50 dark:hover:bg-amber-900 transition-colors border dark:border-gray-600"
             >
               <Instagram className="w-5 h-5 text-gray-700 dark:text-gray-300" />
@@ -168,6 +199,7 @@ export const HeaderInteractive: React.FC<HeaderInteractiveProps> = ({ menuData, 
               href="https://www.linkedin.com/in/qahwaworld"
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Qahwa World on LinkedIn"
               className="p-2 bg-white dark:bg-gray-800 rounded-full hover:bg-amber-50 dark:hover:bg-amber-900 transition-colors border dark:border-gray-600"
             >
               <Linkedin className="w-5 h-5 text-gray-700 dark:text-gray-300" />
@@ -176,6 +208,7 @@ export const HeaderInteractive: React.FC<HeaderInteractiveProps> = ({ menuData, 
               href="https://bsky.app/profile/qahwaworld.bsky.social"
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Qahwa World on Bluesky"
               className="p-2 bg-white dark:bg-gray-800 rounded-full hover:bg-amber-50 dark:hover:bg-amber-900 transition-colors border dark:border-gray-600"
             >
               <BlueskyIcon className="w-5 h-5 text-gray-700 dark:text-gray-300" />
@@ -183,7 +216,10 @@ export const HeaderInteractive: React.FC<HeaderInteractiveProps> = ({ menuData, 
           </div>
 
           {/* Center: Logo */}
-          <Link href={getPath('/')} className="flex items-center gap-3 cursor-pointer group justify-center">
+          <Link
+            href={getPath("/")}
+            className="flex items-center gap-3 cursor-pointer group justify-center"
+          >
             {isDarkTheme ? (
               <img src={darkModeLogo} alt={darkModeAlt} />
             ) : (
@@ -209,13 +245,19 @@ export const HeaderInteractive: React.FC<HeaderInteractiveProps> = ({ menuData, 
               {t.subscribe}
             </Button>
 
-            <LanguageSwitcher currentLanguage={language} onLanguageChange={handleLanguageChange} />
+            <LanguageSwitcher
+              currentLanguage={language}
+              onLanguageChange={handleLanguageChange}
+            />
           </div>
         </div>
 
         {/* Mobile Header */}
         <div className="flex lg:hidden items-center justify-between py-4">
-          <Link href={getPath('/')} className="flex items-center gap-3 cursor-pointer group">
+          <Link
+            href={getPath("/")}
+            className="flex items-center gap-3 cursor-pointer group"
+          >
             <div className="">
               {isDarkTheme ? (
                 <img src={darkModeLogo} alt={darkModeAlt} className="h-10" />
@@ -240,24 +282,30 @@ export const HeaderInteractive: React.FC<HeaderInteractiveProps> = ({ menuData, 
 
         {/* Desktop Navigation Row */}
         <nav
-          className={`hidden lg:flex items-center gap-1 transition-all duration-300 ease-in-out border-t dark:border-gray-700 will-change-[padding] ${isScrolled ? "justify-start py-2" : "justify-between py-3"
-            }`}
+          className={`hidden lg:flex items-center gap-1 transition-all duration-300 ease-in-out border-t dark:border-gray-700 will-change-[padding] ${
+            isScrolled ? "justify-start py-2" : "justify-between py-3"
+          }`}
         >
           {/* Small Logo on Scroll */}
           <Link
-            href={getPath('/')}
-            className={`flex items-center gap-2 cursor-pointer group transition-all duration-300 ease-in-out will-change-[opacity,width,transform] ${isScrolled
-              ? "opacity-100 visible w-auto translate-x-0 mr-6"
-              : "opacity-0 invisible w-0 -translate-x-2 mr-0"
-              }`}
+            href={getPath("/")}
+            className={`flex items-center gap-2 cursor-pointer group transition-all duration-300 ease-in-out will-change-[opacity,width,transform] ${
+              isScrolled
+                ? "opacity-100 visible w-auto translate-x-0 mr-6"
+                : "opacity-0 invisible w-0 -translate-x-2 mr-0"
+            }`}
           >
             <img src={stickyLogo} alt={stickyAlt} className="h-10" />
           </Link>
-          <NavigationMenu menuItems={menuItems} locale={locale} isScrolled={false} />
+          <NavigationMenu
+            menuItems={menuItems}
+            locale={locale}
+            isScrolled={false}
+          />
 
           {/* Theme Toggle */}
           <button
-            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
             className="ltr:ml-auto rtl:mr-auto px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-amber-700 dark:hover:text-amber-500 transition-colors"
             aria-label="Toggle theme"
           >

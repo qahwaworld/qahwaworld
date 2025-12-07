@@ -1,8 +1,16 @@
-'use client';
+"use client";
 
 import React, { useState } from "react";
-import Link from 'next/link';
-import { Search, X, ChevronDown, ChevronRight, Facebook, Instagram, Linkedin } from "lucide-react";
+import Link from "next/link";
+import {
+  Search,
+  X,
+  ChevronDown,
+  ChevronRight,
+  Facebook,
+  Instagram,
+  Linkedin,
+} from "lucide-react";
 import { Input } from "@/components/ui/input";
 import {
   Collapsible,
@@ -35,7 +43,10 @@ const TwitterXIcon = ({ className }: { className?: string }) => (
     className={className}
     viewBox="0 0 16 16"
   >
-    <path d="M12.6 0.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867 -5.07 -4.425 5.07H0.316l5.733 -6.57L0 0.75h5.063l3.495 4.633L12.601 0.75Zm-0.86 13.028h1.36L4.323 2.145H2.865z" strokeWidth="1" />
+    <path
+      d="M12.6 0.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867 -5.07 -4.425 5.07H0.316l5.733 -6.57L0 0.75h5.063l3.495 4.633L12.601 0.75Zm-0.86 13.028h1.36L4.323 2.145H2.865z"
+      strokeWidth="1"
+    />
   </svg>
 );
 
@@ -106,7 +117,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({
   return (
     <div
       className={`fixed top-0 ${
-        locale === 'ar' ? 'right-0' : 'left-0'
+        locale === "ar" ? "right-0" : "left-0"
       } bottom-0 w-80 max-w-[85vw] bg-white dark:bg-gray-900 shadow-2xl flex flex-col z-50 h-screen`}
     >
       {/* Menu Header */}
@@ -201,60 +212,67 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({
       <div className="border-t dark:border-gray-700 bg-white dark:bg-gray-900">
         <div className="p-4">
           <div className="flex items-center justify-between mb-4">
-            <span className="text-sm text-gray-700 dark:text-gray-300">Language</span>
-            <LanguageSwitcher 
-              currentLanguage={currentLanguage} 
-              onLanguageChange={onLanguageChange} 
+            <span className="text-sm text-gray-700 dark:text-gray-300">
+              Language
+            </span>
+            <LanguageSwitcher
+              currentLanguage={currentLanguage}
+              onLanguageChange={onLanguageChange}
             />
           </div>
         </div>
-        
+
         {/* Divider */}
         <div className="border-b dark:border-gray-700"></div>
-        
+
         {/* Social Icons */}
         <div className="p-4 pt-4">
           <div className="flex items-center gap-3">
-          <a
-            href="https://www.facebook.com/Qahwaworld/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-2 bg-white dark:bg-gray-800 rounded-full hover:bg-amber-50 dark:hover:bg-amber-900 transition-colors border dark:border-gray-600"
-          >
-            <Facebook className="w-5 h-5 text-gray-700 dark:text-gray-300" />
-          </a>
-          <a
-            href="https://x.com/qahwaworld"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-2 bg-white dark:bg-gray-800 rounded-full hover:bg-amber-50 dark:hover:bg-amber-900 transition-colors border dark:border-gray-600"
-          >
-            <TwitterXIcon className="w-5 h-5 text-gray-700 dark:text-gray-300" />
-          </a>
-          <a
-            href="https://www.instagram.com/qahwaworld"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-2 bg-white dark:bg-gray-800 rounded-full hover:bg-amber-50 dark:hover:bg-amber-900 transition-colors border dark:border-gray-600"
-          >
-            <Instagram className="w-5 h-5 text-gray-700 dark:text-gray-300" />
-          </a>
-          <a
-            href="https://www.linkedin.com/in/qahwaworld"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-2 bg-white dark:bg-gray-800 rounded-full hover:bg-amber-50 dark:hover:bg-amber-900 transition-colors border dark:border-gray-600"
-          >
-            <Linkedin className="w-5 h-5 text-gray-700 dark:text-gray-300" />
-          </a>
-          <a
-            href="https://bsky.app/profile/qahwaworld.bsky.social"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-2 bg-white dark:bg-gray-800 rounded-full hover:bg-amber-50 dark:hover:bg-amber-900 transition-colors border dark:border-gray-600"
-          >
-            <BlueskyIcon className="w-5 h-5 text-gray-700 dark:text-gray-300" />
-          </a>
+            <a
+              href="https://www.facebook.com/Qahwaworld/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Qahwa World on Facebook"
+              className="p-2 bg-white dark:bg-gray-800 rounded-full hover:bg-amber-50 dark:hover:bg-amber-900 transition-colors border dark:border-gray-600"
+            >
+              <Facebook className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+            </a>
+            <a
+              href="https://x.com/qahwaworld"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Qahwa World on X (Twitter)"
+              className="p-2 bg-white dark:bg-gray-800 rounded-full hover:bg-amber-50 dark:hover:bg-amber-900 transition-colors border dark:border-gray-600"
+            >
+              <TwitterXIcon className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+            </a>
+            <a
+              href="https://www.instagram.com/qahwaworld"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Qahwa World on Instagram"
+              className="p-2 bg-white dark:bg-gray-800 rounded-full hover:bg-amber-50 dark:hover:bg-amber-900 transition-colors border dark:border-gray-600"
+            >
+              <Instagram className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/qahwaworld"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Qahwa World on LinkedIn"
+              className="p-2 bg-white dark:bg-gray-800 rounded-full hover:bg-amber-50 dark:hover:bg-amber-900 transition-colors border dark:border-gray-600"
+            >
+              <Linkedin className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+            </a>
+            <a
+              href="https://bsky.app/profile/qahwaworld.bsky.social"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Qahwa World on Bluesky"
+              className="p-2 bg-white dark:bg-gray-800 rounded-full hover:bg-amber-50 dark:hover:bg-amber-900 transition-colors border dark:border-gray-600"
+            >
+              <BlueskyIcon className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+            </a>
           </div>
         </div>
       </div>
