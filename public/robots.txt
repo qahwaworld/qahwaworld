@@ -1,0 +1,13 @@
+User-agent: *
+Disallow: /wp-admin/
+
+# Allow everything else
+Allow: /
+
+# Sitemap locations
+Sitemap: https://qahwaworld.com/sitemap/en.xml
+Sitemap: https://qahwaworld.com/sitemap/ar.xml
+Sitemap: https://qahwaworld.com/sitemap/ru.xml
+Sitemap: https://qahwaworld.com/news-sitemap.xml
+Sitemap: https://qahwaworld.com/ar/news-sitemap.xml
+Sitemap: https://qahwaworld.com/ru/news-sitemap.xml

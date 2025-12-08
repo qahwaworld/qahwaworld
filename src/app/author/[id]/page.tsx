@@ -8,6 +8,7 @@ import { calculateReadTime, formatDate, stripHtml } from '@/lib/utils';
 import { getTranslations, getCategoryTranslation } from '@/lib/translations';
 import { getLocalizedPath } from '@/lib/localization';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ChevronRight, ChevronLeft, User } from 'lucide-react';
 import { Article } from '@/types';
 import { Metadata } from 'next';
@@ -366,11 +367,13 @@ export default async function AuthorPage({ params, locale = 'en' }: Props) {
           <div className="container mx-auto px-4 py-8">
             <div className="flex items-start gap-6">
               {authorImage ? (
-                <div className="w-24 h-24 rounded-full overflow-hidden shrink-0 shadow-lg">
-                  <img
+                <div className="w-24 h-24 rounded-full overflow-hidden shrink-0 shadow-lg relative">
+                  <Image
                     src={authorImage.sourceUrl}
                     alt={authorImage.altText || authorName}
-                    className="w-full h-full object-cover"
+                    fill
+                    className="object-cover"
+                    sizes="96px"
                   />
                 </div>
               ) : (

@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { getLocalizedPath } from '@/lib/localization';
 import { Article } from '../../types';
 import { Clock } from 'lucide-react';
@@ -40,10 +41,12 @@ const ArticleList: React.FC<ArticleListProps> = ({ articles, locale }) => {
           className="group flex gap-6 bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all"
         >
           <div className="w-80 h-48 relative overflow-hidden flex-shrink-0">
-            <img
+            <Image
               src={article.image}
               alt={article.title}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              fill
+              className="object-cover group-hover:scale-105 transition-transform duration-300"
+              sizes="320px"
             />
           </div>
           <div className="flex-1 p-6 flex flex-col">

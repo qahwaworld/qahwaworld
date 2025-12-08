@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { getLocalizedPath } from '@/lib/localization';
 import { Article } from '../../types';
 import { Clock } from 'lucide-react';
@@ -38,10 +39,12 @@ export const ArticleGrid: React.FC<ArticleGridProps> = ({ articles, locale }) =>
           className="group bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all"
         >
           <div className="aspect-video relative overflow-hidden">
-            <img
+            <Image
               src={article.image}
               alt={article.title}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              fill
+              className="object-cover group-hover:scale-105 transition-transform duration-300"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
             <Badge className="absolute top-4 left-4 bg-amber-700 hover:bg-amber-800">
               {article.category}
