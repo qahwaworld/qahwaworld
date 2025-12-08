@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { stripHtml } from '@/lib/utils';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { getLocalizedPath } from '@/lib/localization';
 import { useLanguage } from '../../contexts/LanguageContext';
@@ -239,11 +240,14 @@ const ArticleDetailPage: React.FC<ArticleDetailPageProps> = ({
             {/* Main Article */}
             <article className="bg-white dark:bg-gray-800 border dark:border-gray-700 shadow-sm mb-8">
               {/* Featured Image - Reduced height on mobile */}
-              <div className="w-full overflow-hidden">
-                <img
+              <div className="w-full overflow-hidden relative" style={{ aspectRatio: '16/9' }}>
+                <Image
                   src={article.image}
                   alt={decodeHTMLEntities(article.title)}
-                  className="w-full h-full object-cover"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
+                  priority
                 />
               </div>
 
@@ -330,16 +334,18 @@ const ArticleDetailPage: React.FC<ArticleDetailPageProps> = ({
                         {galleryImages.map((img, index) => (
                           <div
                             key={index}
-                            className="aspect-video overflow-hidden cursor-pointer hover:opacity-90 transition-opacity"
+                            className="aspect-video overflow-hidden cursor-pointer hover:opacity-90 transition-opacity relative"
                             onClick={() => {
                               setSelectedImageIndex(index);
                               setGalleryOpen(true);
                             }}
                           >
-                            <img
+                            <Image
                               src={img.sourceUrl}
                               alt={img.altText || `Gallery image ${index + 1}`}
-                              className="w-full h-full object-cover"
+                              fill
+                              className="object-cover"
+                              sizes="(max-width: 768px) 50vw, 33vw"
                             />
                           </div>
                         ))}
@@ -477,11 +483,13 @@ const ArticleDetailPage: React.FC<ArticleDetailPageProps> = ({
                       className="bg-white dark:bg-gray-800 border dark:border-gray-700 shadow-sm overflow-hidden hover:shadow-md transition-shadow cursor-pointer block"
                     >
                       <div className="flex flex-col md:flex-row md:grid md:grid-cols-3 gap-0">
-                        <div className="md:col-span-1 h-64">
-                          <img
+                        <div className="md:col-span-1 h-64 relative">
+                          <Image
                             src={relArticle.image}
                             alt={decodeHTMLEntities(relArticle.title)}
-                            className="w-full h-full object-cover"
+                            fill
+                            className="object-cover"
+                            sizes="(max-width: 768px) 100vw, 33vw"
                           />
                         </div>
                         <div className="md:col-span-2 p-6">
@@ -541,12 +549,18 @@ const ArticleDetailPage: React.FC<ArticleDetailPageProps> = ({
               <X className="w-8 h-8" />
             </button>
 
-            <div className="max-w-5xl w-full">
-              <img
-                src={galleryImages[selectedImageIndex]?.sourceUrl}
-                alt={galleryImages[selectedImageIndex]?.altText || `Gallery image ${selectedImageIndex + 1}`}
-                className="w-full h-auto max-h-[80vh] object-contain"
-              />
+            <div className="max-w-5xl w-full relative" style={{ minHeight: '60vh' }}>
+              {galleryImages[selectedImageIndex] && (
+                <Image
+                  src={galleryImages[selectedImageIndex].sourceUrl}
+                  alt={galleryImages[selectedImageIndex].altText || `Gallery image ${selectedImageIndex + 1}`}
+                  width={1200}
+                  height={800}
+                  className="w-full h-auto max-h-[80vh] object-contain"
+                  sizes="(max-width: 1280px) 100vw, 1280px"
+                  priority
+                />
+              )}
 
               <div className="flex items-center justify-center gap-4 mt-6">
                 <button
@@ -580,15 +594,17 @@ const ArticleDetailPage: React.FC<ArticleDetailPageProps> = ({
                   <button
                     key={index}
                     onClick={() => setSelectedImageIndex(index)}
-                    className={`aspect-video overflow-hidden transition-opacity ${index === selectedImageIndex
+                    className={`aspect-video overflow-hidden transition-opacity relative ${index === selectedImageIndex
                       ? "ring-2 ring-amber-500"
                       : "opacity-60 hover:opacity-100"
                       }`}
                   >
-                    <img
+                    <Image
                       src={img.sourceUrl}
                       alt={img.altText || `Thumbnail ${index + 1}`}
-                      className="w-full h-full object-cover"
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 25vw, 20vw"
                     />
                   </button>
                 ))}

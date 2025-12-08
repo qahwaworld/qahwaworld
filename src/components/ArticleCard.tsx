@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import { Article } from "../types";
 import { Calendar, User, Clock } from "lucide-react";
 import { Badge } from "./ui/badge";
@@ -56,11 +57,13 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
   if (variant === "small") {
     return (
       <div className="flex gap-3 cursor-pointer group" onClick={onClick}>
-        <div className="w-24 h-24 flex-shrink-0 overflow-hidden">
-          <img
+        <div className="w-24 h-24 flex-shrink-0 overflow-hidden relative">
+          <Image
             src={article.image}
             alt={article.title}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            fill
+            className="object-cover group-hover:scale-105 transition-transform duration-300"
+            sizes="96px"
           />
         </div>
         <div className="flex-1 min-w-0">
@@ -88,10 +91,12 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
     return (
       <div className="cursor-pointer group" onClick={onClick}>
         <div className="relative overflow-hidden mb-4 h-96">
-          <img
+          <Image
             src={article.image}
             alt={article.title}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            fill
+            className="object-cover group-hover:scale-105 transition-transform duration-500"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
           <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
@@ -130,11 +135,13 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
         className="flex gap-4 cursor-pointer group border overflow-hidden hover:shadow-md transition-shadow"
         onClick={onClick}
       >
-        <div className="w-48 h-32 flex-shrink-0 overflow-hidden">
-          <img
+        <div className="w-48 h-32 flex-shrink-0 overflow-hidden relative">
+          <Image
             src={article.image}
             alt={article.title}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            fill
+            className="object-cover group-hover:scale-105 transition-transform duration-300"
+            sizes="192px"
           />
         </div>
         <div className="flex-1 min-w-0 p-4">
@@ -161,10 +168,12 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
   return (
     <div className="cursor-pointer group" onClick={onClick}>
       <div className="relative overflow-hidden mb-3 h-48">
-        <img
+        <Image
           src={article.image}
           alt={article.title}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          fill
+          className="object-cover group-hover:scale-105 transition-transform duration-300"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
       </div>
       <Badge className={`${getBadgeClasses(article.category, "light")} mb-2`}>

@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { mockArticles } from "../../data/mockArticles";
 import { ArticleCard } from "../ArticleCard";
 import { ArrowRight, Clock } from "lucide-react";
@@ -140,11 +141,13 @@ const HomePage: React.FC<HomePageProps> = async ({ locale }) => {
                     <h2 className="mb-4 text-amber-900 dark:text-amber-100 text-3xl">
                       {decodeHTMLEntities(featuredArticle.title)}
                     </h2>
-                    <div className="aspect-video overflow-hidden mb-6">
-                      <img
-                        src={featuredArticle.featuredImage?.node?.sourceUrl}
+                    <div className="aspect-video overflow-hidden mb-6 relative">
+                      <Image
+                        src={featuredArticle.featuredImage?.node?.sourceUrl || ''}
                         alt={featuredArticle.featuredImage?.node?.altText || decodeHTMLEntities(featuredArticle.title)}
-                        className="w-full h-full object-cover"
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 66vw, 50vw"
                       />
                     </div>
                     <p className="text-gray-600 dark:text-gray-400 mb-4 leading-relaxed">
@@ -167,11 +170,13 @@ const HomePage: React.FC<HomePageProps> = async ({ locale }) => {
                     <h2 className="mb-4 text-amber-900 dark:text-amber-100 text-3xl">
                       {mockArticles[0].title}
                     </h2>
-                    <div className="aspect-video overflow-hidden mb-6">
-                      <img
+                    <div className="aspect-video overflow-hidden mb-6 relative">
+                      <Image
                         src={mockArticles[0].image}
                         alt={mockArticles[0].title}
-                        className="w-full h-full object-cover"
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 66vw, 50vw"
                       />
                     </div>
                     <p className="text-gray-600 dark:text-gray-400 mb-4 leading-relaxed">
@@ -203,11 +208,13 @@ const HomePage: React.FC<HomePageProps> = async ({ locale }) => {
                           href={getPath(`/${getLocalizedCategory(article.categories)?.slug}/${article.slug}`)}
                           className="bg-white dark:bg-gray-800 border dark:border-gray-700 overflow-hidden group cursor-pointer hover:shadow-lg transition-shadow block"
                         >
-                          <div className="aspect-video overflow-hidden">
-                            <img
-                              src={article.featuredImage?.node?.sourceUrl}
+                          <div className="aspect-video overflow-hidden relative">
+                            <Image
+                              src={article.featuredImage?.node?.sourceUrl || ''}
                               alt={article.featuredImage?.node?.altText || decodedTitle}
-                              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                              fill
+                              className="object-cover transition-transform duration-300 group-hover:scale-105"
+                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                             />
                           </div>
                           <div className="p-4">
@@ -236,11 +243,13 @@ const HomePage: React.FC<HomePageProps> = async ({ locale }) => {
                           href={getPath(`/${article.category.toLowerCase().replace(' ', '-')}/${article.id}`)}
                           className="bg-white dark:bg-gray-800 border dark:border-gray-700 overflow-hidden group cursor-pointer hover:shadow-lg transition-shadow block"
                         >
-                          <div className="aspect-video overflow-hidden">
-                            <img
+                          <div className="aspect-video overflow-hidden relative">
+                            <Image
                               src={article.image}
                               alt={article.title}
-                              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                              fill
+                              className="object-cover transition-transform duration-300 group-hover:scale-105"
+                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                             />
                           </div>
                           <div className="p-4">
@@ -289,11 +298,13 @@ const HomePage: React.FC<HomePageProps> = async ({ locale }) => {
                             href={getPath(`/${categorySlug}/${article.slug}`)}
                             className="group cursor-pointer block"
                           >
-                            <div className="aspect-video overflow-hidden mb-3">
-                              <img
-                                src={article.featuredImage}
+                            <div className="aspect-video overflow-hidden mb-3 relative">
+                              <Image
+                                src={article.featuredImage || ''}
                                 alt={decodedTitle}
-                                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                fill
+                                className="object-cover transition-transform duration-300 group-hover:scale-105"
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                               />
                             </div>
                             <Badge className="bg-emerald-100 text-emerald-800 hover:bg-emerald-200 mb-2">
@@ -318,11 +329,13 @@ const HomePage: React.FC<HomePageProps> = async ({ locale }) => {
                           href={getPath(`/${article.category.toLowerCase().replace(' ', '-')}/${article.id}`)}
                           className="group cursor-pointer block"
                         >
-                          <div className="aspect-video overflow-hidden mb-3">
-                            <img
+                          <div className="aspect-video overflow-hidden mb-3 relative">
+                            <Image
                               src={article.image}
                               alt={article.title}
-                              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                              fill
+                              className="object-cover transition-transform duration-300 group-hover:scale-105"
+                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                             />
                           </div>
                           <Badge className="bg-emerald-100 text-emerald-800 hover:bg-emerald-200 mb-2">
@@ -396,11 +409,13 @@ const HomePage: React.FC<HomePageProps> = async ({ locale }) => {
                           href={getPath(`/${section.category.slug}/${post.slug}`)}
                           className="bg-white dark:bg-gray-800 border dark:border-gray-700 overflow-hidden group cursor-pointer hover:shadow-lg transition-shadow block"
                         >
-                          <div className="aspect-video overflow-hidden">
-                            <img
-                              src={post.featuredImage}
+                          <div className="aspect-video overflow-hidden relative">
+                            <Image
+                              src={post.featuredImage || ''}
                               alt={decodedTitle}
-                              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                              fill
+                              className="object-cover transition-transform duration-300 group-hover:scale-105"
+                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                             />
                           </div>
                           <div className="p-4">
@@ -427,11 +442,13 @@ const HomePage: React.FC<HomePageProps> = async ({ locale }) => {
                         href={getPath(`/${article.category.toLowerCase().replace(' ', '-')}/${article.id}`)}
                         className="bg-white dark:bg-gray-800 border dark:border-gray-700 overflow-hidden group cursor-pointer hover:shadow-lg transition-shadow block"
                       >
-                        <div className="aspect-video overflow-hidden">
-                          <img
+                        <div className="aspect-video overflow-hidden relative">
+                          <Image
                             src={article.image}
                             alt={article.title}
-                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                            fill
+                            className="object-cover transition-transform duration-300 group-hover:scale-105"
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                           />
                         </div>
                         <div className="p-4">
