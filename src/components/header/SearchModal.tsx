@@ -13,9 +13,10 @@ interface SearchModalProps {
   onClose: () => void;
   locale: string;
   searchPlaceholder: string;
+  searchTitle: string;
 }
 
-export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose, locale, searchPlaceholder }) => {
+export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose, locale, searchPlaceholder, searchTitle }) => {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -51,7 +52,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose, local
             <div className="container mx-auto max-w-3xl">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-2xl font-bold text-amber-900 dark:text-amber-100">
-                  Search
+                  {searchTitle}
                 </h2>
                 <button
                   onClick={onClose}

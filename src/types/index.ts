@@ -101,4 +101,11 @@ export interface Translation {
   toastSubscriptionSuccess: string;
   toastSubscriptionError: string;
   toastSubscribing: string;
+
+  // Subscribe Modal
+  subscribeModalDescription: string;
+
+  // Read Time
+  minRead: string;
+  readTime: string;
 }

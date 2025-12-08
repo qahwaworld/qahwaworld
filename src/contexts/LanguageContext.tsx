@@ -59,9 +59,12 @@ const translations: Record<Language, Translation> = {
     toastSubscriptionSuccess: 'You have successfully subscribed!',
     toastSubscriptionError: 'Something went wrong. Please try again later.',
     toastSubscribing: 'Subscribing...',
+    subscribeModalDescription: 'Get the latest coffee news and stories delivered to your inbox.',
+    minRead: 'Min Read',
+    readTime: 'Read time:',
   },
   ar: {
-    search: 'بحث',
+    search: 'البحث',
     subscribe: 'اشترك',
     news: 'أخبار',
     coffeeWorld: 'عالم القهوة',
@@ -115,6 +118,9 @@ const translations: Record<Language, Translation> = {
     toastSubscriptionSuccess: 'لقد اشتركت بنجاح!',
     toastSubscriptionError: 'حدث خطأ ما. يرجى المحاولة مرة أخرى لاحقاً.',
     toastSubscribing: 'جاري الاشتراك...',
+    subscribeModalDescription: 'استلم أحدث أخبار وقصص القهوة مباشرةً في بريدك الإلكتروني.',
+    minRead: 'دقيقة للقراءة',
+    readTime: 'وقت القراءة:',
   },
   ru: {
     search: 'Поиск',
@@ -171,6 +177,9 @@ const translations: Record<Language, Translation> = {
     toastSubscriptionSuccess: 'Вы успешно подписались!',
     toastSubscriptionError: 'Что-то пошло не так. Пожалуйста, попробуйте позже.',
     toastSubscribing: 'Подписка...',
+    subscribeModalDescription: 'Получайте свежие новости и истории о кофе прямо на почту.',
+    minRead: 'Мин. чтение',
+    readTime: 'Время чтения:',
   },
 };
 

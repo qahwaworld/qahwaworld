@@ -217,7 +217,7 @@ const HomePage: React.FC<HomePageProps> = async ({ locale }) => {
                             <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 mb-2">
                               <span>{new Date(article.date).toLocaleDateString(locale, { year: 'numeric', month: 'short', day: 'numeric' })}</span>
                               <span>•</span>
-                              <span>5 min read</span>
+                              <span>{`5 ${t.minRead}`}</span>
                             </div>
                             <h3 className="text-lg text-gray-900 dark:text-gray-100 group-hover:text-amber-700 dark:group-hover:text-amber-500 transition-colors line-clamp-2 mb-2">
                               {decodedTitle}
@@ -307,7 +307,7 @@ const HomePage: React.FC<HomePageProps> = async ({ locale }) => {
                             </p>
                             <div className="flex items-center gap-2 text-xs text-gray-400 dark:text-gray-500">
                               <Clock className="w-3 h-3" />
-                              <span>{`${article.readingTime} min read`}</span>
+                              <span>{`${article.readingTime} ${t.minRead}`}</span>
                             </div>
                           </Link>
                         );
@@ -410,7 +410,7 @@ const HomePage: React.FC<HomePageProps> = async ({ locale }) => {
                             <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 mb-2">
                               <span>{formattedDate}</span>
                               <span>•</span>
-                              <span>{post.readingTime} min read</span>
+                              <span>{`${post.readingTime} ${t.minRead}`}</span>
                             </div>
                             <h3 className="text-base text-gray-900 dark:text-gray-100 group-hover:text-amber-700 dark:group-hover:text-amber-500 transition-colors line-clamp-2">
                               {decodedTitle}

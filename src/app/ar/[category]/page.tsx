@@ -227,7 +227,7 @@ export default async function CategoryRoute({ params, locale = 'ar' }: Props) {
       image: a.featuredImage?.node?.sourceUrl || '',
       date: a.date,
       author: a.author?.node?.name || '',
-      readTime: calculateReadTime(a.content || ''),
+      readTime: calculateReadTime(a.content || '', locale),
       featured: a.articleDetails?.featured,
       tags: a.tags?.nodes?.map((t: { name: string }) => t.name) || [],
       content: a.content,

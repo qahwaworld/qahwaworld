@@ -19,6 +19,7 @@ interface SubscribeModalProps {
     toastSubscriptionSuccess: string;
     toastSubscriptionError: string;
     toastSubscribing: string;
+    subscribeModalDescription: string;
   };
 }
 
@@ -112,7 +113,7 @@ export const SubscribeModal: React.FC<SubscribeModalProps> = ({ isOpen, onClose,
               </div>
 
               <p className="text-gray-600 dark:text-gray-400 mb-6">
-                Get the latest coffee news and stories delivered to your inbox.
+                {translations.subscribeModalDescription}
               </p>
 
               <form onSubmit={handleSubscribe} className="space-y-4">

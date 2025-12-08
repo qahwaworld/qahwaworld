@@ -319,7 +319,7 @@ export default async function Page({ params, searchParams, locale = 'en' }: Prop
         authorImage: articleData.author.node.authorInfo?.authorImage?.node,
         authorPostCount: authorPostCount,
         date: formatDate(articleData.date, locale),
-        readTime: calculateReadTime(articleData.content),
+        readTime: calculateReadTime(articleData.content, locale),
         tags: articleData.tags.nodes.map(tag => ({ name: tag.name, slug: tag.slug })),
         slug: articleData.slug,
         galleryImages: articleData.postAdvancePost?.galleryImages?.nodes || [],
@@ -352,7 +352,7 @@ export default async function Page({ params, searchParams, locale = 'en' }: Prop
                     author: wpArticle.author?.node?.name || 'Unknown',
                     authorId: wpArticle.author?.node?.databaseId,
                     date: formatDate(wpArticle.date, locale),
-                    readTime: calculateReadTime(wpArticle.content || ''),
+                    readTime: calculateReadTime(wpArticle.content || '', locale),
                     tags: wpArticle.tags?.nodes?.map(tag => ({ name: tag.name, slug: tag.slug })) || [],
                     slug: wpArticle.slug,
                 };
