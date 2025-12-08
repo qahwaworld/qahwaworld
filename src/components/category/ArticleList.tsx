@@ -6,6 +6,7 @@ import { getLocalizedPath } from '@/lib/localization';
 import { Article } from '../../types';
 import { Clock } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface ArticleListProps {
   articles: Article[];
@@ -13,6 +14,7 @@ interface ArticleListProps {
 }
 
 const ArticleList: React.FC<ArticleListProps> = ({ articles, locale }) => {
+  const { t } = useLanguage();
   const getPath = (path: string) => getLocalizedPath(path, locale);
 
   // Helper to format date as YYYY-MM-DD
@@ -59,7 +61,7 @@ const ArticleList: React.FC<ArticleListProps> = ({ articles, locale }) => {
             <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
               <div className="flex items-center gap-1">
                 <Clock className="w-4 h-4" />
-                <span>Read time: {article.readTime}</span>
+                <span>{t.readTime} {article.readTime}</span>
               </div>
               <span>{formatDate(article.date)}</span>
             </div>

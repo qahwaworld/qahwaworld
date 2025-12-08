@@ -79,7 +79,7 @@ export async function GET(request: NextRequest) {
         date: formatDate(a.date, language),
         author: a.author?.node?.name || '',
         authorId: a.author?.node?.databaseId,
-        readTime: calculateReadTime(a.content || ''),
+        readTime: calculateReadTime(a.content || '', language),
         featured: false,
         tags:
           a.tags?.nodes?.map((t: { name: string; slug: string }) => ({

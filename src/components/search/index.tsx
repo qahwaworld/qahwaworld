@@ -41,7 +41,7 @@ const SearchResultsPage = async ({ query = '', locale }: SearchResultsPageProps)
         categorySlug: primaryCategory?.slug || 'uncategorized',
         author: article.author.node.name,
         date: formatDate(article.date, locale),
-        readTime: calculateReadTime(article.content),
+        readTime: calculateReadTime(article.content, locale),
         tags: article.tags.nodes.map(tag => ({ name: tag.name, slug: tag.slug })),
         slug: article.slug,
       };

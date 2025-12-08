@@ -7,10 +7,22 @@ import { HeaderMenuData, MobileMenuData, FooterCategoriesMenuData, FooterPagesMe
 import './globals.css';
 import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google';
 
-export const metadata: Metadata = {
-  title: 'Qahwa World - Coffee Culture & News',
-  description: 'Discover the latest coffee news, brewing techniques, and stories from around the world.',
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const logoData = await getGlobalOptions();
+  const favIconUrl = logoData?.favIcon?.sourceUrl;
+
+  return {
+    title: 'Qahwa World - Coffee Culture & News',
+    description: 'Discover the latest coffee news, brewing techniques, and stories from around the world.',
+    ...(favIconUrl && {
+      icons: {
+        icon: favIconUrl,
+        shortcut: favIconUrl,
+        apple: favIconUrl,
+      },
+    }),
+  };
+}
 
 export default async function RootLayout({
   children,

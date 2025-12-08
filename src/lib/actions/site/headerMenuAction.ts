@@ -133,6 +133,12 @@ export interface GlobalOptionsType {
           sourceUrl: string;
         };
       };
+      favIcon: {
+        node: {
+          altText: string;
+          sourceUrl: string;
+        };
+      } | null;
       popAdCode?: string | null;
       footerDescriptionEn?: string | null;
       footerDescriptionAr?: string | null;
@@ -165,6 +171,10 @@ export interface LogoData {
     altText: string;
     sourceUrl: string;
   };
+  favIcon: {
+    altText: string;
+    sourceUrl: string;
+  } | null;
   popAdCode?: string | null;
   footerDescriptionEn?: string | null;
   footerDescriptionAr?: string | null;
@@ -214,6 +224,10 @@ export async function getGlobalOptions(): Promise<LogoData | null> {
         altText: options.logoSticky?.node?.altText || 'Qahwa World Logo',
         sourceUrl: options.logoSticky?.node?.sourceUrl || '',
       },
+      favIcon: options.favIcon?.node ? {
+        altText: options.favIcon.node.altText || 'Favicon',
+        sourceUrl: options.favIcon.node.sourceUrl || '',
+      } : null,
       popAdCode: options.popAdCode ?? null,
       footerDescriptionEn: options.footerDescriptionEn ?? null,
       footerDescriptionAr: options.footerDescriptionAr ?? null,

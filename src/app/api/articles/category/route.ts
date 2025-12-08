@@ -63,7 +63,7 @@ export async function GET(request: NextRequest) {
         image: a.featuredImage?.node?.sourceUrl || '',
         date: formatDate(a.date, language),
         author: a.author?.node?.name || '',
-        readTime: calculateReadTime(a.content || ''),
+        readTime: calculateReadTime(a.content || '', language),
         featured: false,
         tags: a.tags?.nodes?.map((t: { name: string }) => t.name) || [],
         content: a.content,

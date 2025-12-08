@@ -317,7 +317,7 @@ export default async function AuthorPage({ params, locale = 'en' }: Props) {
         date: formatDate(a.date, locale),
         author: a.author?.node?.name || '',
         authorId: a.author?.node?.databaseId,
-        readTime: calculateReadTime(a.content || ''),
+        readTime: calculateReadTime(a.content || '', locale),
         featured: false,
         tags: a.tags?.nodes?.map((t: { name: string; slug: string }) => ({
           name: t.name,

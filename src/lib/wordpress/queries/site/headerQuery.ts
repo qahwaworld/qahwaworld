@@ -179,6 +179,12 @@ query globalOptions {
           sourceUrl
         }
       }
+      favIcon {
+        node {
+          altText
+          sourceUrl
+        }
+      }
       popAdCode
       footerDescriptionEn
       footerDescriptionAr

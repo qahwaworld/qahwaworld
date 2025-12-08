@@ -343,6 +343,7 @@ export const HeaderInteractive: React.FC<HeaderInteractiveProps> = ({
         onClose={() => setSearchModalOpen(false)}
         locale={locale}
         searchPlaceholder={t.search}
+        searchTitle={t.search}
       />
 
       {/* Subscribe Modal */}
@@ -358,6 +359,7 @@ export const HeaderInteractive: React.FC<HeaderInteractiveProps> = ({
           toastSubscriptionSuccess: t.toastSubscriptionSuccess,
           toastSubscriptionError: t.toastSubscriptionError,
           toastSubscribing: t.toastSubscribing,
+          subscribeModalDescription: t.subscribeModalDescription,
         }}
       />
     </header>
