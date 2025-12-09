@@ -256,7 +256,7 @@ export const HeaderInteractive: React.FC<HeaderInteractiveProps> = ({
         <div className="flex lg:hidden items-center justify-between py-4">
           <Link
             href={getPath("/")}
-            className="flex items-center gap-3 cursor-pointer group flex-1"
+            className={`flex items-center gap-3 cursor-pointer group flex-1 ${locale === 'ar' ? 'ml-4' : 'mr-4'}`}
           >
             <div className="">
               {isDarkTheme ? (
@@ -267,7 +267,7 @@ export const HeaderInteractive: React.FC<HeaderInteractiveProps> = ({
             </div>
           </Link>
 
-          <div className="flex items-center gap-2 ml-4">
+          <div className={`flex items-center gap-2 ${locale === 'ar' ? 'mr-4' : 'ml-4'}`}>
             <LanguageSwitcher
               currentLanguage={language}
               onLanguageChange={handleLanguageChange}
