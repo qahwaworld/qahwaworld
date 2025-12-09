@@ -20,7 +20,6 @@ import {
 import { Category } from "@/lib/actions/site/headerMenuAction";
 import { getLocalizedPath } from "@/lib/localization";
 import { toast } from "sonner";
-import { LanguageSwitcher } from "./LanguageSwitcher";
 import { Language } from "@/types";
 
 // Custom Bluesky icon component
@@ -55,8 +54,6 @@ interface MobileMenuProps {
   locale: string;
   isOpen: boolean;
   onClose: () => void;
-  currentLanguage: Language;
-  onLanguageChange: (lang: Language) => void;
   translations: {
     search: string;
     about: string;
@@ -78,8 +75,6 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({
   locale,
   isOpen,
   onClose,
-  currentLanguage,
-  onLanguageChange,
   translations,
 }) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -208,23 +203,8 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({
         </div>
       </div>
 
-      {/* Language Switcher & Social Icons Footer */}
+      {/* Social Icons Footer */}
       <div className="border-t dark:border-gray-700 bg-white dark:bg-gray-900">
-        <div className="p-4">
-          <div className="flex items-center justify-between mb-4">
-            <span className="text-sm text-gray-700 dark:text-gray-300">
-              Language
-            </span>
-            <LanguageSwitcher
-              currentLanguage={currentLanguage}
-              onLanguageChange={onLanguageChange}
-            />
-          </div>
-        </div>
-
-        {/* Divider */}
-        <div className="border-b dark:border-gray-700"></div>
-
         {/* Social Icons */}
         <div className="p-4 pt-4">
           <div className="flex items-center gap-3">

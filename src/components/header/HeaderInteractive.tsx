@@ -256,7 +256,7 @@ export const HeaderInteractive: React.FC<HeaderInteractiveProps> = ({
         <div className="flex lg:hidden items-center justify-between py-4">
           <Link
             href={getPath("/")}
-            className="flex items-center gap-3 cursor-pointer group"
+            className="flex items-center gap-3 cursor-pointer group flex-1"
           >
             <div className="">
               {isDarkTheme ? (
@@ -267,17 +267,38 @@ export const HeaderInteractive: React.FC<HeaderInteractiveProps> = ({
             </div>
           </Link>
 
-          <button
-            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle mobile menu"
-          >
-            {mobileMenuOpen ? (
-              <X className="w-6 h-6 text-gray-700 dark:text-gray-300" />
-            ) : (
-              <Menu className="w-6 h-6 text-gray-700 dark:text-gray-300" />
-            )}
-          </button>
+          <div className="flex items-center gap-2 ml-4">
+            <LanguageSwitcher
+              currentLanguage={language}
+              onLanguageChange={handleLanguageChange}
+              variant="dropdown"
+            />
+            {/* Theme Toggle for Mobile */}
+            <button
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors"
+              aria-label="Toggle theme"
+            >
+              {!mounted ? (
+                <Sun className="w-5 h-5 text-gray-700 dark:text-gray-300 opacity-50" />
+              ) : theme === "dark" ? (
+                <Sun className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+              ) : (
+                <Moon className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+              )}
+            </button>
+            <button
+              className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle mobile menu"
+            >
+              {mobileMenuOpen ? (
+                <X className="w-6 h-6 text-gray-700 dark:text-gray-300" />
+              ) : (
+                <Menu className="w-6 h-6 text-gray-700 dark:text-gray-300" />
+              )}
+            </button>
+          </div>
         </div>
 
         {/* Desktop Navigation Row */}
@@ -326,8 +347,6 @@ export const HeaderInteractive: React.FC<HeaderInteractiveProps> = ({
         locale={locale}
         isOpen={mobileMenuOpen}
         onClose={() => setMobileMenuOpen(false)}
-        currentLanguage={language}
-        onLanguageChange={handleLanguageChange}
         translations={{
           search: t.search,
           about: t.about,
