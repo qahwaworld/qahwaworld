@@ -3,6 +3,7 @@ import { ThemeProvider } from '@/contexts/ThemeContext';
 import { LocaleWrapper } from '@/components/LocaleWrapper';
 import { HtmlAttributes } from '@/components/HtmlAttributes';
 import { ThirdPartyCode } from '@/components/ThirdPartyCode';
+import { ServerMetaTags } from '@/components/ServerMetaTags';
 import { HeaderMenuData, MobileMenuData, FooterCategoriesMenuData, FooterPagesMenuData, getGlobalOptions } from '@/lib/actions/site/headerMenuAction';
 import './globals.css';
 import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google';
@@ -10,6 +11,15 @@ import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google';
 export async function generateMetadata(): Promise<Metadata> {
   const logoData = await getGlobalOptions();
   const favIconUrl = logoData?.favIcon?.sourceUrl;
+  
+  // Extract Yandex verification from codeHead
+  let yandexVerification: string | undefined;
+  if (logoData?.codeHead) {
+    const yandexMatch = logoData.codeHead.match(/<meta\s+name=["']yandex-verification["']\s+content=["']([^"']+)["']\s*\/?>/i);
+    if (yandexMatch) {
+      yandexVerification = yandexMatch[1];
+    }
+  }
 
   return {
     title: 'Qahwa World - Coffee Culture & News',
@@ -19,6 +29,11 @@ export async function generateMetadata(): Promise<Metadata> {
         icon: favIconUrl,
         shortcut: favIconUrl,
         apple: favIconUrl,
+      },
+    }),
+    ...(yandexVerification && {
+      other: {
+        'yandex-verification': yandexVerification,
       },
     }),
   };
@@ -79,11 +94,22 @@ export default async function RootLayout({
   const codeBody = logoData?.codeBody || null;
   const codeFooter = logoData?.codeFooter || null;
 
+  // Filter out meta tags from codeHead (they'll be rendered server-side)
+  let codeHeadWithoutMeta = codeHead;
+  if (codeHead) {
+    // Remove meta tags from codeHead since they're rendered server-side
+    codeHeadWithoutMeta = codeHead.replace(/<meta[^>]*>/gi, '').trim();
+    if (!codeHeadWithoutMeta) {
+      codeHeadWithoutMeta = null;
+    }
+  }
+
   return (
     <html lang="en" suppressHydrationWarning>
       {googleTagManagerId && <GoogleTagManager gtmId={googleTagManagerId} />}
       <body suppressHydrationWarning>
-        {codeHead && <ThirdPartyCode html={codeHead} position="head" />}
+        <ServerMetaTags codeHead={codeHead} />
+        {codeHeadWithoutMeta && <ThirdPartyCode html={codeHeadWithoutMeta} position="head" />}
         {codeBody && <ThirdPartyCode html={codeBody} position="body" />}
         <HtmlAttributes />
         <ThemeProvider>

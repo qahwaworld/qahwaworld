@@ -14,7 +14,7 @@ if ( ! defined( '_S_VERSION' ) ) {
 
 if ( ! defined( 'NEXTJS_FRONTEND_URL' ) ) {
 	// Next.js frontend URL - change this to your production URL when deploying
-	define( 'NEXTJS_FRONTEND_URL', 'https://qahwaworld.vercel.app' );
+	define( 'NEXTJS_FRONTEND_URL', 'https://qahwaworld.com' );
 }
 
 /**
