@@ -44,7 +44,6 @@ if (!defined('NEXTJS_URL')) {
     define('NEXTJS_URL', 'https://your-nextjs-domain.com'); // ⚠️ CHANGE THIS!
     // 
     // Examples:
-    // define('NEXTJS_URL', 'https://qahwaworld.vercel.app'); // If deployed to Vercel
     // define('NEXTJS_URL', 'https://abc123.ngrok.io'); // If using ngrok
     // define('NEXTJS_URL', 'http://localhost:3000'); // ❌ WON'T WORK - WordPress is remote!
 }

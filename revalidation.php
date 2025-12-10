@@ -43,7 +43,7 @@ if (!defined('NEXTJS_FRONTEND_URL')) {
     //    3. Copy the URL and update NEXTJS_FRONTEND_URL in wp-functions.php
     // 
     // FALLBACK - Only used if NEXTJS_FRONTEND_URL is not defined in wp-functions.php:
-    define('NEXTJS_FRONTEND_URL', 'https://qahwaworld.vercel.app');
+    define('NEXTJS_FRONTEND_URL', 'https://qahwaworld.com');
 }
 if (!defined('NEXTJS_SECRET')) {
     define('NEXTJS_SECRET', 'nxjs_8k2m645445djasg855sdar889532fsdfs'); // Must match REVALIDATE_SECRET in .env.local
@@ -217,7 +217,7 @@ function send_revalidation_webhook($post_id, $post, $action) {
     }
     
     // Warn but continue if using defaults (allow localhost development)
-    if (NEXTJS_FRONTEND_URL === 'https://qahwaworld.vercel.app') {
+    if (NEXTJS_FRONTEND_URL === 'https://qahwaworld.com') {
         error_log('ℹ️ Using default NEXTJS_FRONTEND_URL (localhost) - make sure Next.js is running');
     }
     
@@ -267,7 +267,7 @@ function send_revalidation_webhook($post_id, $post, $action) {
             
             // If using IP address, try localhost
             if (strpos($base_url, '192.168.') !== false || strpos($base_url, '10.') !== false) {
-                $fallback_urls[] = 'https://qahwaworld.vercel.app';
+                $fallback_urls[] = 'https://qahwaworld.com';
                 $fallback_urls[] = 'http://127.0.0.1:3000';
             }
             
@@ -304,7 +304,7 @@ function send_revalidation_webhook($post_id, $post, $action) {
             error_log('❌ All connection attempts failed. Check network configuration.');
             error_log('💡 WordPress might be in Docker/VM. Try:');
             error_log('   1. http://host.docker.internal:3000 (if WordPress is in Docker)');
-            error_log('   2. https://qahwaworld.vercel.app (if WordPress is on same machine)');
+            error_log('   2. https://qahwaworld.com (if WordPress is on same machine)');
             error_log('   3. Check firewall settings');
             error_log('   4. Verify Next.js is running: curl ' . $webhook_url);
         } else {
@@ -381,7 +381,7 @@ function test_nextjs_revalidation() {
             echo '<h4>Common Issues:</h4>';
             echo '<ul>';
             echo '<li>Is your Next.js server running?</li>';
-            echo '<li>Is the URL correct? (https://qahwaworld.vercel.app for local)</li>';
+            echo '<li>Is the URL correct? (https://qahwaworld.com for local)</li>';
             echo '<li>Check your firewall settings</li>';
             echo '</ul>';
         } else {
