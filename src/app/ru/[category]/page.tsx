@@ -3,7 +3,7 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getArticlesByCategory } from '@/lib/actions/category/getArticlesByCategory';
 import { getHomepageAdBanner } from '@/lib/actions/home/homeAction';
-import { calculateReadTime } from '@/lib/utils';
+import { calculateReadTime, normalizeUrl } from '@/lib/utils';
 import { getTranslations, getCategoryTranslation } from '@/lib/translations';
 import { getLocalizedPath } from '@/lib/localization';
 import Link from 'next/link';
@@ -75,10 +75,10 @@ function convertArticleSeoToPageSeo(articleSeo: any): PageSEO | null {
     title: articleSeo.title || '',
     metaDesc: articleSeo.metaDesc || '',
     metaKeywords: articleSeo.metaKeywords || '',
-    canonical: articleSeo.canonical || '',
+    canonical: normalizeUrl(articleSeo.canonical) || '',
     opengraphTitle: articleSeo.opengraphTitle || '',
     opengraphDescription: articleSeo.opengraphDescription || '',
-    opengraphUrl: articleSeo.opengraphUrl || '',
+    opengraphUrl: normalizeUrl(articleSeo.opengraphUrl) || '',
     opengraphImage: articleSeo.opengraphImage ? {
       sourceUrl: articleSeo.opengraphImage.sourceUrl || '',
     } : null,
@@ -138,10 +138,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ? `${seoData.title} - Qahwa World`
     : `${categoryName} - Qahwa World`;
   const description = seoData?.metaDesc || `Просмотр статей в категории ${categoryName} на Qahwa World`;
-  const canonical = seoData?.canonical || categoryUrl;
+  const canonical = normalizeUrl(seoData?.canonical) || categoryUrl;
   const ogTitle = seoData?.opengraphTitle || title;
   const ogDescription = seoData?.opengraphDescription || description;
-  const ogUrl = seoData?.opengraphUrl || categoryUrl;
+  const ogUrl = normalizeUrl(seoData?.opengraphUrl) || categoryUrl;
   const ogImage = seoData?.opengraphImage?.sourceUrl || firstArticle.featuredImage?.node?.sourceUrl;
   const ogType = (seoData?.opengraphType === 'article' ? 'article' : 'website') as 'website' | 'article';
   const twitterTitle = seoData?.opengraphTitle || ogTitle;

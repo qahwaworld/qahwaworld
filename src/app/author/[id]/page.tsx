@@ -4,7 +4,7 @@ import { getAuthorPostCount } from '@/lib/actions/article/articleAction';
 import { getHomepageAdBanner } from '@/lib/actions/home/homeAction';
 import { getAuthorSEO } from '@/lib/actions/author/getAuthorSEO';
 import { AuthorContent } from '@/components/author';
-import { calculateReadTime, formatDate, stripHtml } from '@/lib/utils';
+import { calculateReadTime, formatDate, stripHtml, normalizeUrl } from '@/lib/utils';
 import { getTranslations, getCategoryTranslation } from '@/lib/translations';
 import { getLocalizedPath } from '@/lib/localization';
 import Link from 'next/link';
@@ -157,10 +157,10 @@ export async function generateMetadata({ params, locale = 'en' }: Props): Promis
       ? `${seoData.title} - Qahwa World`
       : `${authorName} - Qahwa World`;
     const description = seoData?.metaDesc || `Browse all articles by ${authorName} on Qahwa World`;
-    const canonical = seoData?.canonical || authorUrl;
+    const canonical = normalizeUrl(seoData?.canonical) || authorUrl;
     const ogTitle = seoData?.opengraphTitle || title;
     const ogDescription = seoData?.opengraphDescription || description;
-    const ogUrl = seoData?.canonical || authorUrl;
+    const ogUrl = normalizeUrl(seoData?.canonical) || authorUrl;
     const ogImage = seoData?.opengraphImage?.sourceUrl || 
                    authorSEOData?.authorInfo?.authorImage?.node?.sourceUrl ||
                    articles[0]?.author?.node?.authorInfo?.authorImage?.node?.sourceUrl;

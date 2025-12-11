@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import TagRoute from '@/app/tag/[tag]/page';
 import { getArticlesByTag } from '@/lib/actions/tag/getArticlesByTag';
 import { getLocalizedPath } from '@/lib/localization';
+import { normalizeUrl } from '@/lib/utils';
 
 interface Props {
   params: Promise<{ tag: string }>;
@@ -41,10 +42,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ? `${seoData.title} - Qahwa World`
     : `#${tagName} - Qahwa World`;
   const description = seoData?.metaDesc || `تصفح جميع المقالات الموسومة بـ "${tagName}" على Qahwa World`;
-  const canonical = seoData?.canonical || tagUrl;
+  const canonical = normalizeUrl(seoData?.canonical) || tagUrl;
   const ogTitle = seoData?.opengraphTitle || title;
   const ogDescription = seoData?.opengraphDescription || description;
-  const ogUrl = seoData?.opengraphUrl || tagUrl;
+  const ogUrl = normalizeUrl(seoData?.opengraphUrl) || tagUrl;
   const ogImage = seoData?.opengraphImage?.sourceUrl || firstArticle.featuredImage?.node?.sourceUrl;
   const ogType = (seoData?.opengraphType === 'article' ? 'article' : 'website') as 'website' | 'article';
   const twitterTitle = seoData?.opengraphTitle || ogTitle;

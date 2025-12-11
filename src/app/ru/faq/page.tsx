@@ -4,6 +4,7 @@ import { FAQPage } from '@/components/faq';
 import { getFAQPageData } from '@/lib/actions/faq/faqAction';
 import { getPagesSeo } from '@/lib/actions/seo/pagesSeoAction';
 import { JsonLdSchema } from '@/components/JsonLdSchema';
+import { normalizeUrl } from '@/lib/utils';
 
 // Cache the SEO data fetch to avoid duplicate calls
 const getCachedSeoData = cache(async (language: string, id: number | null = null) => {
@@ -69,14 +70,14 @@ export async function generateMetadata(): Promise<Metadata> {
   
   const description = seoData?.metaDesc || defaultDescription;
   const keywords = seoData?.metaKeywords || 'часто задаваемые вопросы, вопросы, мир кофе, кофе, помощь, поддержка';
-  const canonical = seoData?.canonical || `${siteUrl}/ru/faq`;
+  const canonical = normalizeUrl(seoData?.canonical) || `${siteUrl}/ru/faq`;
   
   // Open Graph data
   const ogTitle = seoData?.opengraphTitle 
     ? getLocalizedText(seoData.opengraphTitle, 'ru')
     : title;
   const ogDescription = seoData?.opengraphDescription || description;
-  const ogUrl = seoData?.opengraphUrl || canonical;
+  const ogUrl = normalizeUrl(seoData?.opengraphUrl) || canonical;
   const ogImage = seoData?.opengraphImage?.sourceUrl;
   const ogSiteName = seoData?.opengraphSiteName 
     ? getLocalizedText(seoData.opengraphSiteName, 'ru')
