@@ -5,7 +5,7 @@ import { getArticleBySlug, getAuthorPostCount } from '@/lib/actions/article/arti
 import { fetchPreviewPostBySlug, fetchPreviewPostById } from '@/lib/actions/article/previewAction';
 import { ArticleDetailPage } from '@/components/article';
 import { ArticleLanguageHandler } from '@/components/article/ArticleLanguageHandler';
-import { stripHtml, calculateReadTime, formatDate } from '@/lib/utils';
+import { stripHtml, calculateReadTime, formatDate, normalizeUrl } from '@/lib/utils';
 import { Article } from '@/types';
 import { Metadata } from 'next';
 import { getHomepageAdBanner } from '@/lib/actions/home/homeAction';
@@ -38,10 +38,10 @@ function convertArticleSeoToPageSeo(articleSeo: any): PageSEO | null {
     title: articleSeo.title || '',
     metaDesc: articleSeo.metaDesc || '',
     metaKeywords: articleSeo.metaKeywords || '',
-    canonical: articleSeo.canonical || '',
+    canonical: normalizeUrl(articleSeo.canonical) || '',
     opengraphTitle: articleSeo.opengraphTitle || '',
     opengraphDescription: articleSeo.opengraphDescription || '',
-    opengraphUrl: articleSeo.opengraphUrl || '',
+    opengraphUrl: normalizeUrl(articleSeo.opengraphUrl) || '',
     opengraphImage: articleSeo.opengraphImage ? {
       sourceUrl: articleSeo.opengraphImage.sourceUrl || '',
     } : null,
@@ -158,10 +158,10 @@ export async function generateMetadata({ params, locale = 'en' }: Props): Promis
         ? `${seoData.title} - Qahwa World`
         : `${articleData.title} - Qahwa World`;
     const description = seoData?.metaDesc || stripHtml(articleData.excerpt).slice(0, 160);
-    const canonical = seoData?.canonical || articleUrl;
+    const canonical = normalizeUrl(seoData?.canonical) || articleUrl;
     const ogTitle = seoData?.opengraphTitle || title;
     const ogDescription = seoData?.opengraphDescription || description;
-    const ogUrl = seoData?.opengraphUrl || articleUrl;
+    const ogUrl = normalizeUrl(seoData?.opengraphUrl) || articleUrl;
     const ogImage = seoData?.opengraphImage?.sourceUrl || articleData.featuredImage?.node?.sourceUrl;
     const ogType = (seoData?.opengraphType === 'article' ? 'article' : 'article') as 'article';
     const twitterTitle = seoData?.opengraphTitle || ogTitle;

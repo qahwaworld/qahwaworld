@@ -3,6 +3,7 @@ import { cache } from 'react';
 import { AboutPage } from '@/components/about';
 import { getPagesSeo } from '@/lib/actions/seo/pagesSeoAction';
 import { JsonLdSchema } from '@/components/JsonLdSchema';
+import { normalizeUrl } from '@/lib/utils';
 
 // Cache the SEO data fetch to avoid duplicate calls
 const getCachedSeoData = cache(async (language: string, id: number | null = null) => {
@@ -68,14 +69,14 @@ export async function generateMetadata(): Promise<Metadata> {
   
   const description = seoData?.metaDesc || defaultDescription;
   const keywords = seoData?.metaKeywords || 'من نحن، قهوة، عالم القهوة، المهمة، الرؤية، القيم';
-  const canonical = seoData?.canonical || `${siteUrl}/ar/about`;
+  const canonical = normalizeUrl(seoData?.canonical) || `${siteUrl}/ar/about`;
   
   // Open Graph data
   const ogTitle = seoData?.opengraphTitle 
     ? getLocalizedText(seoData.opengraphTitle, 'ar')
     : title;
   const ogDescription = seoData?.opengraphDescription || description;
-  const ogUrl = seoData?.opengraphUrl || canonical;
+  const ogUrl = normalizeUrl(seoData?.opengraphUrl) || canonical;
   const ogImage = seoData?.opengraphImage?.sourceUrl;
   const ogSiteName = seoData?.opengraphSiteName 
     ? getLocalizedText(seoData.opengraphSiteName, 'ar')
