@@ -7,7 +7,11 @@ interface Props {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-    return generateArticleMetadata({ params, locale: 'ru' });
+    return generateArticleMetadata({ 
+        params, 
+        searchParams: Promise.resolve({}), 
+        locale: 'ru' 
+    });
 }
 
 export default async function ArticlePage({ params, searchParams }: Props) {
