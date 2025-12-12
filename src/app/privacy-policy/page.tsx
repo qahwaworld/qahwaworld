@@ -69,7 +69,8 @@ export async function generateMetadata(): Promise<Metadata> {
   
   const description = seoData?.metaDesc || defaultDescription;
   const keywords = seoData?.metaKeywords || 'privacy policy, data protection, personal information, cookies';
-  const canonical = normalizeUrl(seoData?.canonical) || `${siteUrl}/privacy`;
+  // Canonical URL should always match the current page URL
+  const canonical = `${siteUrl}/privacy`;
   
   // Open Graph data
   const ogTitle = seoData?.opengraphTitle 

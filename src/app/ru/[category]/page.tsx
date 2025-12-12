@@ -138,7 +138,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ? `${seoData.title} - Qahwa World`
     : `${categoryName} - Qahwa World`;
   const description = seoData?.metaDesc || `Просмотр статей в категории ${categoryName} на Qahwa World`;
-  const canonical = normalizeUrl(seoData?.canonical) || categoryUrl;
+  // Canonical URL should always match the current page URL (with correct locale prefix)
+  const canonical = categoryUrl;
   const ogTitle = seoData?.opengraphTitle || title;
   const ogDescription = seoData?.opengraphDescription || description;
   const ogUrl = normalizeUrl(seoData?.opengraphUrl) || categoryUrl;

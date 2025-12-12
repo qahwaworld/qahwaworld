@@ -67,7 +67,8 @@ export async function generateMetadata(): Promise<Metadata> {
   
   const description = seoData?.metaDesc || defaultDescription;
   const keywords = seoData?.metaKeywords || 'кофе, новости кофе, заваривание, кофейная культура, бариста';
-  const canonical = normalizeUrl(seoData?.canonical) || `${siteUrl}/ru`;
+  // Canonical URL should always match the current page URL
+  const canonical = `${siteUrl}/ru`;
   
   // Open Graph data
   const ogTitle = seoData?.opengraphTitle 
