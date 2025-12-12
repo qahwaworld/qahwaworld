@@ -69,7 +69,8 @@ export async function generateMetadata(): Promise<Metadata> {
   
   const description = seoData?.metaDesc || defaultDescription;
   const keywords = seoData?.metaKeywords || 'about us, coffee, qahwa world, mission, vision, values';
-  const canonical = normalizeUrl(seoData?.canonical) || `${siteUrl}/about`;
+  // Canonical URL should always match the current page URL
+  const canonical = `${siteUrl}/about`;
   
   // Open Graph data
   const ogTitle = seoData?.opengraphTitle 

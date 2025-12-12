@@ -70,7 +70,8 @@ export async function generateMetadata(): Promise<Metadata> {
   
   const description = seoData?.metaDesc || defaultDescription;
   const keywords = seoData?.metaKeywords || 'اتصل بنا, عالم القهوة, قهوة, استفسار, تعليقات';
-  const canonical = normalizeUrl(seoData?.canonical) || `${siteUrl}/ar/contact`;
+  // Canonical URL should always match the current page URL
+  const canonical = `${siteUrl}/ar/contact`;
   
   // Open Graph data
   const ogTitle = seoData?.opengraphTitle 

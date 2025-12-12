@@ -157,7 +157,8 @@ export async function generateMetadata({ params, locale = 'en' }: Props): Promis
       ? `${seoData.title} - Qahwa World`
       : `${authorName} - Qahwa World`;
     const description = seoData?.metaDesc || `Browse all articles by ${authorName} on Qahwa World`;
-    const canonical = normalizeUrl(seoData?.canonical) || authorUrl;
+    // Canonical URL should always match the current page URL (with correct locale prefix)
+    const canonical = authorUrl;
     const ogTitle = seoData?.opengraphTitle || title;
     const ogDescription = seoData?.opengraphDescription || description;
     const ogUrl = normalizeUrl(seoData?.canonical) || authorUrl;
