@@ -1,111 +1,113 @@
 import { gql } from "@apollo/client";
 
 export const GET_ARTICLE = gql`
-  query GetArticle($id: ID!) {
-  post(id: $id, idType: SLUG) {
-    id
-    databaseId
-    title
-    excerpt
-    content
-    postAdvancePost {
-      galleryImages {
-        nodes {
-          altText
-          sourceUrl
-        }
-      }
-      contentAfterGallery
-    }
-    date
-    slug
-    link
-    featuredImage {
-      node {
-        sourceUrl
-        altText
-        mediaDetails {
-          width
-          height
-        }
-      }
-    }
-    categories {
+  query GetArticle($slug: String!, $language: String = null) {
+    posts(where: {name: $slug, language: $language, status: PUBLISH}, first: 1) {
       nodes {
-        name
+        id
+        databaseId
+        title
+        excerpt
+        content
+        date
         slug
+        link
+        postAdvancePost {
+          galleryImages {
+            nodes {
+              altText
+              sourceUrl
+            }
+          }
+          contentAfterGallery
+        }
+        featuredImage {
+          node {
+            sourceUrl
+            altText
+            mediaDetails {
+              width
+              height
+            }
+          }
+        }
+        categories {
+          nodes {
+            name
+            slug
+            translations {
+              slug
+              language {
+                code
+              }
+            }
+          }
+        }
+        tags {
+          nodes {
+            name
+            slug
+          }
+        }
+        author {
+          node {
+            name
+            slug
+            databaseId
+            authorInfo {
+              authorBioEn
+              authorBioAr
+              authorBioRu
+              authorImage {
+                node {
+                  altText
+                  sourceUrl(size: THUMBNAIL)
+                }
+              }
+            }
+          }
+        }
         translations {
           slug
           language {
             code
           }
         }
-      }
-    }
-    tags {
-      nodes {
-        name
-        slug
-      }
-    }
-    author {
-      node {
-        name
-        slug
-        databaseId
-        authorInfo {
-          authorBioEn
-          authorBioAr
-          authorBioRu
-          authorImage {
-            node {
-              altText
-              sourceUrl(size: THUMBNAIL)
-            }
+        seo {
+          canonical
+          metaDesc
+          metaKeywords
+          metaRobotsNofollow
+          metaRobotsNoindex
+          opengraphAuthor
+          opengraphDescription
+          opengraphImage {
+            altText
+            sourceUrl
+          }
+          opengraphModifiedTime
+          opengraphPublishedTime
+          opengraphPublisher
+          opengraphSiteName
+          opengraphTitle
+          opengraphType
+          opengraphUrl
+          readingTime
+          schema {
+            articleType
+            pageType
+            raw
+          }
+          title
+          twitterDescription
+          twitterImage {
+            altText
+            sourceUrl
           }
         }
       }
     }
-    translations {
-      slug
-      language {
-        code
-      }
-    }
-    seo {
-        canonical
-        metaDesc
-        metaKeywords
-        metaRobotsNofollow
-        metaRobotsNoindex
-        opengraphAuthor
-        opengraphDescription
-        opengraphImage {
-          altText
-          sourceUrl
-        }
-        opengraphModifiedTime
-        opengraphPublishedTime
-        opengraphPublisher
-        opengraphSiteName
-        opengraphTitle
-        opengraphType
-        opengraphUrl
-        readingTime
-        schema {
-          articleType
-          pageType
-          raw
-        }
-        title
-        twitterDescription
-        twitterImage {
-          altText
-          sourceUrl
-        }
-      }
   }
-}
 `;
 
 export const GET_ARTICLES = gql`

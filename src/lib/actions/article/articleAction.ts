@@ -107,11 +107,11 @@ export interface ArticleData {
     };
 }
 
-export async function getArticleBySlug(slug: string): Promise<ArticleData | null> {
+export async function getArticleBySlug(slug: string, language?: string | null): Promise<ArticleData | null> {
     try {
-        const result = await client.query<{ post: ArticleData }>({
+        const result = await client.query<{ posts: { nodes: ArticleData[] } }>({
             query: GET_ARTICLE,
-            variables: { id: slug },
+            variables: { slug, language: language || null },
             context: {
                 fetchOptions: {
                     next: {
@@ -122,10 +122,10 @@ export async function getArticleBySlug(slug: string): Promise<ArticleData | null
         });
 
 
-        if (!result.data?.post) {
+        if (!result.data?.posts?.nodes || result.data.posts.nodes.length === 0) {
             return null;
         }
-        return result.data.post;
+        return result.data.posts.nodes[0];
     } catch (error) {
         return null;
     }
