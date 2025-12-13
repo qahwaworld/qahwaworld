@@ -143,7 +143,7 @@ export async function generateMetadata({ params, locale = 'en' }: Props): Promis
     const { slug, category } = await params;
     const decodedSlug = decodeURIComponent(slug);
     const decodedCategory = decodeURIComponent(category);
-    const articleData = await getArticleBySlug(decodedSlug);
+    const articleData = await getArticleBySlug(decodedSlug, locale);
 
     if (!articleData) {
         return {
@@ -262,7 +262,7 @@ export default async function Page({ params, searchParams, locale = 'en' }: Prop
       // 1. Navigation to OTHER articles while in preview mode (they will be published articles)
       // 2. Normal article viewing when NOT in preview mode
       // 3. Graceful fallback if token is invalid/expired
-      articleData = await getArticleBySlug(decodedSlug);
+      articleData = await getArticleBySlug(decodedSlug, locale);
     }
 
     if (!articleData) {
